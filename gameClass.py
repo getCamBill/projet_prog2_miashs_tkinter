@@ -3,9 +3,10 @@ class Person:
       self.name: str = name
       self.age: int = age
 
+
 class case(Person):
     def __int__(self):
-        self.position :str = 'A1'
+        self.position :str = None
 
     def occupee(self):
         if 
