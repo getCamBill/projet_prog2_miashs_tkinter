@@ -3,8 +3,12 @@ class Person:
       self.name: str = name
       self.age: int = age
 
-  def myfunc(self):
-    print("Hello my name is " + self.name)
+class case(Person):
+    def __int__(self):
+        self.position :str = 'A1'
+
+    def occupee(self):
+        if 
 
 p1 = Person()
 p2 = Person("Bill", 42)
