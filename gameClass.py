@@ -8,15 +8,13 @@ class case(Person):
     def __int__(self):
         self.position :str = None
 
-    def occupee(self):
-        if 
 
 p1 = Person()
 p2 = Person("Bill", 42)
-
-Tablier = dict({'A1': None, 'A2': p2})
-print(Tablier['A1'])
+c1 = case()
+Tablier = dict({c1: None, 'A2': p2})
+print(Tablier[c1])
 print(Tablier['A2'].name)
-Tablier['A1'] = p1
-print(Tablier['A1'].name)
+Tablier[c1] = p1
+print(Tablier[c1].name)
 print(Tablier['A2'].name)
