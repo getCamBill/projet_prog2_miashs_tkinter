@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XMI verified="false" xmi.version="1.2" timestamp="2019-10-27T15:45:32" xmlns:UML="http://schema.omg.org/spec/UML/1.4">
+<XMI verified="false" xmi.version="1.2" timestamp="2019-10-28T12:16:17" xmlns:UML="http://schema.omg.org/spec/UML/1.4">
  <XMI.header>
   <XMI.documentation>
    <XMI.exporter>umbrello uml modeller http://umbrello.kde.org</XMI.exporter>
@@ -45,10 +45,10 @@
       </UML:Package>
       <UML:Class visibility="public" isSpecification="false" namespace="Logical_View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uF7gedmo31Iax" name="piece">
        <UML:Classifier.feature>
-        <UML:Attribute visibility="private" isSpecification="false" xmi.id="uy2TBSefygkEc" type="uFZFxLYp2RWji" initialValue="none" name="couleur"/>
-        <UML:Attribute visibility="private" isSpecification="false" xmi.id="uvD5Xwu7Q70Ch" type="uFZFxLYp2RWji" initialValue="none" name="forme"/>
-        <UML:Attribute visibility="private" isSpecification="false" xmi.id="uioSoZVLinvEq" type="uFZFxLYp2RWji" initialValue="none" name="taille"/>
-        <UML:Attribute visibility="private" isSpecification="false" xmi.id="uylRSRwcvrMjW" type="uEwQ9YVEp90Yb" initialValue="none" name="creux"/>
+        <UML:Attribute visibility="private" isSpecification="false" xmi.id="uy2TBSefygkEc" type="uFZFxLYp2RWji" name="couleur"/>
+        <UML:Attribute visibility="private" isSpecification="false" xmi.id="uvD5Xwu7Q70Ch" type="uFZFxLYp2RWji" name="forme"/>
+        <UML:Attribute visibility="private" isSpecification="false" xmi.id="uioSoZVLinvEq" type="uFZFxLYp2RWji" name="taille"/>
+        <UML:Attribute visibility="private" isSpecification="false" xmi.id="uylRSRwcvrMjW" type="uEwQ9YVEp90Yb" name="creux"/>
        </UML:Classifier.feature>
       </UML:Class>
      </UML:Namespace.ownedElement>
@@ -56,7 +56,7 @@
       <diagrams resolution="120">
        <diagram showopsig="1" linecolor="#ff0000" snapx="25" showattribassocs="1" snapy="25" linewidth="0" showattsig="1" textcolor="#000000" isopen="1" showpackage="1" showpubliconly="0" showstereotype="1" name="class diagram" font="Sans Serif,9,-1,0,50,0,0,0,0,0" canvasheight="685" canvaswidth="479" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#d3d3d3" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffff00" zoom="99,94246732966221" xmi.id="uYQAx2PIugo49" documentation="" showscope="1" snapgrid="0" showatts="1" type="1">
         <widgets>
-         <classwidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" showoperations="1" usesdiagramusefillcolor="0" showpubliconly="0" showpackage="1" x="-671.958" showattsigs="601" showstereotype="1" y="-897.493" showattributes="1" font="Sans Serif,9,-1,0,50,0,0,0,0,0" localid="uINdQwzzckhj8" width="157" isinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="uF7gedmo31Iax" autoresize="1" showscope="1" height="93" showopsigs="601"/>
+         <classwidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" showoperations="1" usesdiagramusefillcolor="0" showpubliconly="0" showpackage="1" x="-671.958" showattsigs="601" showstereotype="1" y="-897.493" showattributes="1" font="Sans Serif,9,-1,0,50,0,0,0,0,0" localid="uINdQwzzckhj8" width="108" isinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="uF7gedmo31Iax" autoresize="1" showscope="1" height="93" showopsigs="601"/>
         </widgets>
         <messages/>
         <associations/>
