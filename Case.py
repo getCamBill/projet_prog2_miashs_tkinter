@@ -1,9 +1,10 @@
 from Piece import Piece
+from Tablier import Tablier
 
-class Case(object):
+class Case(Tablier):
 
-    def __init__(self, id: str):
-        self.id: str = id
+    def __init__(self, idPiece: str):
+        self.idPiece: str = idPiece
         self.attributs: Piece = None
         self.liens: list = []
         self.occuped: bool = False
@@ -16,3 +17,6 @@ class Case(object):
         self.dug: int = pieceAttr.getDug()
 
     #def getCaseVoisines(self):
+
+    def showId(self):
+        return self.idPiece

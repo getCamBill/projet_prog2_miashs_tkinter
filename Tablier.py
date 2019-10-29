@@ -13,8 +13,8 @@ class Tablier(object):
             for val in ("1234"):
                 self.i += 1
                 self.id = lettre+val
-                case = Case(self.id)
-                self.tablier[self.i] = {case: None}
+                case = Case(self.idPiece)
+                self.tablier[self.i] = {self.id: case}
 
     def showTablier(self):
         print(self.tablier.values())
@@ -22,7 +22,7 @@ class Tablier(object):
     #def isCaseLibre(self, case: str): # case est définie par 'B2' par ex
 
 
-    #def poserPiece(self, case: str, pieceID: str):
+    def poserPiece(self, case: str, pieceID: str):
 
 
 t1 = Tablier()

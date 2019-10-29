@@ -22,4 +22,27 @@ class Pioche(object):
 
 
 p1 = Pioche()
-#p1.showPiece()
+p1.showPiece()
+
+
+
+
+
+# listePieces = [
+#     Piece("Marron", "Rond", "Grand", 1),
+#     Piece("Marron", "Rond", "Grand", 0),
+#     Piece("Marron", "Rond", "Grand", 1),
+#     Piece("Marron", "Rond", "Grand", 0),
+#     Piece("Marron", "Carré", "Petit", 1),
+#     Piece("Marron", "Carré", "Petit", 0),
+#     Piece("Marron", "Carré", "Petit", 1),
+#     Piece("Marron", "Carré", "Petit", 0),
+#     Piece("Beige", "Carré", "Petit", 1),
+#     Piece("Beige", "Carré", "Petit", 0),
+#     Piece("Beige", "Carré", "Petit", 1),
+#     Piece("Beige", "Carré", "Petit", 0),
+#     Piece("Beige", "Rond", "Grand", 1),
+#     Piece("Beige", "Rond", "Grand", 0),
+#     Piece("Beige", "Rond", "Grand", 1),
+#     Piece("Beige", "Rond", "Grand", 0)
+# ]
