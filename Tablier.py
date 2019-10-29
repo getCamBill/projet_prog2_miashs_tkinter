@@ -19,10 +19,10 @@ class Tablier(object):
     def showTablier(self):
         print(self.tablier.values())
 
-    #def isCaseLibre(self, case: str): # case est définie par 'B2' par ex
+    #def isCaseLibre(self, idCase: str): # case est définie par 'B2' par ex
 
 
-    def poserPiece(self, case: str, pieceID: str):
+    #def poserPiece(self, case: str, pieceID: str):
 
 
 t1 = Tablier()
