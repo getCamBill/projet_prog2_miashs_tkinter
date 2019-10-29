@@ -2,7 +2,7 @@ from Piece import Piece
 
 class Case(object):
 
-    def __init__(self, idPiece: str, color: str=None, shape: str=None, size: str=None, dug: str=None ):
+    def __init__(self, idPiece: str, color: str=None, shape: str=None, size: str=None, dug: int=None ):
         self.idPiece: str = idPiece
         self.couleur: str = color
         self.shape: str = shape
@@ -18,7 +18,16 @@ class Case(object):
         self.size: str = pieceAttr.getSize()
         self.dug: int = pieceAttr.getDug()
 
-    #def getCaseVoisines(self):
+    def isCaseLibre(self):
+        return self.occuped
 
     def showId(self):
         return self.idPiece
+
+    # def showCase(self):
+    #     print("Couleur : ", self.couleur,
+    #     "Forme : ", self.shape,
+    #     "Taille : ", self.size,
+    #     "Creux : ", self.dug,
+    #     "Occupée : ", self.occuped
+    #     )
