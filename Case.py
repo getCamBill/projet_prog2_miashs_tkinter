@@ -8,7 +8,6 @@ class Case(object):
         self.shape: str = shape
         self.size: str = size
         self.dug: int = dug
-        self.liens: list = []
         self.occuped: bool = False
 
     def pieceAttrToCase(self, pieceAttr: Piece):
