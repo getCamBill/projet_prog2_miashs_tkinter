@@ -22,7 +22,7 @@ class Pioche(object):
 
 
 p1 = Pioche()
-p1.showPiece()
+#p1.showPiece()
 
 
 

@@ -1,12 +1,12 @@
 from Piece import Piece
-
+from Tablier import Tablier
 
 class Etat(object):
 
     def __init__(self, etatInitial: bool = False):
         self.etatInitial = etatInitial
 
-    def isLigneQuarto(self, p1: Piece, p2: Piece, p3: Piece, p4: Piece):
+    def isQuarto(self, p1: Piece, p2: Piece, p3: Piece, p4: Piece):
         """
         :type p1: Piece
         :argument p1: p1
@@ -28,11 +28,13 @@ class Etat(object):
 
         return isAttrEnCommun #, NbAttrEnCommun, listAttrEnCommun
 
+    # def isLigneQuarto(self, p1: Piece, p2: Piece, p3: Piece, p4: Piece):
+    # def isColonneQuarto(self, p1: Piece, p2: Piece, p3: Piece, p4: Piece):
+    # def isDiagoQuarto(self, p1: Piece, p2: Piece, p3: Piece, p4: Piece):
 
 
 
-
-etat1 = Etat(True)
+etat1 = Etat(True) # a True la Partie commence et a False fin de la partie
 
 p1 = Piece("Marron", "Rond", "Grand", 1)
 p2 = Piece("Beige", "Rond", "Petit", 1)
@@ -44,4 +46,4 @@ p4 = Piece("Marron", "Rond", "Petit", 1)
 # p3 = Piece("Beige", "Rond", "Grand", 0)
 # p4 = Piece("Marron", "Rond", "Petit", 1)
 
-print(etat1.isLigneQuarto(p1, p2, p3, p4))
+print(etat1.isQuarto(p1, p2, p3, p4))

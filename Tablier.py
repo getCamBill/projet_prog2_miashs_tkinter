@@ -12,10 +12,11 @@ class Tablier(object):
         for lettre in ("ABCD"):
             for val in ("1234"):
                 self.i += 1
-                self.id = lettre+val
+                self.idPiece = lettre+val
                 case = Case(self.idPiece)
-                self.tablier[self.i] = {self.id: case}
-
+                self.tablier[self.i] = {self.idPiece: case}
+                case = None
+                
     def showTablier(self):
         print(self.tablier.values())
 

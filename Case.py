@@ -1,11 +1,13 @@
 from Piece import Piece
-from Tablier import Tablier
 
-class Case(Tablier):
+class Case(object):
 
-    def __init__(self, idPiece: str):
+    def __init__(self, idPiece: str, color: str=None, shape: str=None, size: str=None, dug: str=None ):
         self.idPiece: str = idPiece
-        self.attributs: Piece = None
+        self.couleur: str = color
+        self.shape: str = shape
+        self.size: str = size
+        self.dug: int = dug
         self.liens: list = []
         self.occuped: bool = False
 
