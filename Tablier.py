@@ -45,7 +45,6 @@ class Tablier(object):
                     for val4 in p4.__dict__.values():
                         if val1 == val2 and val2 == val3 and val3 == val4:
                             #print(val1, val2, val3, val4) # ligne pour débuguer
-
                             NbAttrEnCommun += 1
                             isAttrEnCommun = True
                             listAttrEnCommun.append(val4)
@@ -56,22 +55,34 @@ class Tablier(object):
         if self.isQuarto(self.tablier['A1'], self.tablier['B2'], self.tablier['C3'], self.tablier['D4']):
             print("Quarto !! ")
 
+    def isLigneQuarto(self):
+        for i in range(1, 4):
+            if self.isQuarto(self.tablier['A1'], self.tablier['B1'], self.tablier['C1'], self.tablier['D1']):
+                print("Quarto !! ")
+
+    def isColonneQuarto(self):
+        for i in range(1, 4):
+            for lettre in ('ABCD'):
+                if self.isQuarto(self.tablier[lettre+str(i)], self.tablier[lettre+str(i)], self.tablier[lettre+str(i)], self.tablier[lettre+str(i)]):
+                    print("Quarto !! ")
+
+
 idCase: str = 'A1'
-idCase3: str = 'B2'
-idCase4: str = 'C3'
-idCase2: str = 'D4'
+idCase3: str = 'B1'
+idCase4: str = 'C1'
+idCase2: str = 'D1'
 
 t1 = Tablier()
 p1 = Piece("Marron", "Rond", "Grand", 1)
 p2 = Piece("Beige", "Carré", "Petit", 1)
 p3 = Piece("Beige", "Rond", "Grand", 1)
 p4 = Piece("Marron", "Rond", "Petit", 1)
-t1.showTablier()
+#t1.showTablier()
 print("//////////////////////////////")
 t1.poserPiece(idCase, p1)
 t1.poserPiece(idCase2, p2)
 t1.poserPiece(idCase3, p3)
 t1.poserPiece(idCase4, p4)
-t1.isDiagoQuarto()
-t1.showTablier()
+t1.isLigneQuarto()
+#t1.showTablier()
 

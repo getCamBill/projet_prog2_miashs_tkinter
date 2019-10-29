@@ -6,37 +6,7 @@ class Etat(object):
 
     def __init__(self, etatInitial: bool = False):
         self.etatInitial = etatInitial
-        self.tablier = Tablier().__init__()
-
-    # def isQuarto(self, p1: Piece, p2: Piece, p3: Piece, p4: Piece):
-    #     """
-    #     :type p1: Piece
-    #     :argument p1: p1
-    #     """
-    #     NbAttrEnCommun: int = 0
-    #     isAttrEnCommun: bool = False
-    #     listAttrEnCommun: list = []
-    #
-    #     for val1 in p1.__dict__.values():
-    #         for val2 in p2.__dict__.values():
-    #             for val3 in p3.__dict__.values():
-    #                 for val4 in p4.__dict__.values():
-    #                     if val1 == val2 and val2 == val3 and val3 == val4:
-    #                         # print(val1, val2, val3, val4) # ligne pour débuguer
-    #
-    #                         NbAttrEnCommun += 1
-    #                         isAttrEnCommun = True
-    #                         listAttrEnCommun.append(val4)
-    #
-    #     return isAttrEnCommun  # , NbAttrEnCommun, listAttrEnCommun
-    #
-    # def isDiagoQuarto(self):
-    #     if self.isQuarto(self.tablier['A1'], self.tablier['B2'], self.tablier['C3'], self.tablier['D4']):
-    #         print("Quarto !! ")
-
-    # def isLigneQuarto(self, p1: Piece, p2: Piece, p3: Piece, p4: Piece):
-    # def isColonneQuarto(self, p1: Piece, p2: Piece, p3: Piece, p4: Piece):
-
+        #Tablier().__init__()
 
 
 
