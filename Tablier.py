@@ -55,7 +55,7 @@ class Tablier():
                     print("La position {0} est déjà occupée !".format(idCase))
         else:
             print("La case n'est pas comprise entre A..D et 1..4")
-    """
+    """ 
     Redéfinir la fonction pour les deux autres valeur de sorties
     """
     def isQuarto(self, idPiece1: str, idPiece2: str, idPiece3: str, idPiece4: str):
