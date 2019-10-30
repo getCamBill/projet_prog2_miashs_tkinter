@@ -74,14 +74,37 @@ class Game(object):
     #def showEtatJeu(self):
 
     def start(self):
-        #self.showRules()
+        self.showRules()
         self.aborted = False
-        while not self.aborted:
-            self.actiondePiece()
-            self.actionCase()
 
-            if self.aborted:
-                break
+        i: int = 0
+        while self.aborted == False:
+            print("Le joueur 1 choisit une pièce pour le joueur 2, dans la liste suivante : \n")
+            self.Pioche.showPieces()
+            piece = input("Id de la pièce choisis : ")
+            if piece == 'q':
+                self.aborted = True
+                print("ABANDON DE LA PARTIE ......")
+            else:
+                self.Tablier.piecePourAdversaire(piece, self.Joueur2)
+                print("Le joueur 2 indique la case : ")
+                self.Tablier.showTablier()
+                case = input("Id de la case : ")
+                if case == 'q':
+                    self.aborted = True
+                    print("ABANDON DE LA PARTIE ......")
+                else:
+                    self.Tablier.poserPiece(self.Joueur2, case, self.Pioche)
+                    i += 1
+                    if i > 3: # on appelle les fonctions seulement au bout de 4 tour
+                        if self.Tablier.isDiagoQuarto() or \
+                        self.Tablier.isLigneQuarto() or \
+                        self.Tablier.isColonneQuarto():
+                            print("QUARTO !! \n    FIN DE LA PARTIE ......")
+                            self.aborted = True
+
+
+
 
 if __name__ == "__main__":
     Game().start()
