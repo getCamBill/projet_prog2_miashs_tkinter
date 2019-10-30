@@ -1,10 +1,8 @@
 from Piece import Piece
-# La Pioche est un objet qui contient une liste d'objet 'Piece'
 
 class Pioche(object):
 
     def __init__(self):
-        self.i: int = 0
         self.Pioche = dict({})
         for color in ("Marron", "Beige"):
             for shape in ("Rond", "Carré"):
@@ -13,7 +11,6 @@ class Pioche(object):
                         self.idPiece: str = color[0] + shape[0] + size[0] + str(dug)
                         piece: Piece = Piece(color, shape, size, dug)
                         self.Pioche[self.idPiece] = piece
-                        self.i += 1
 
     def showPieces(self):
         print("Pièces disponibles : ")
