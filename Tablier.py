@@ -1,4 +1,5 @@
 from Pioche import Pioche
+from Joueur import Joueur
 from Piece import Piece
 from Case import Case
 
@@ -6,6 +7,7 @@ class Tablier():
 
     def __init__(self):
         self.Pioche = Pioche().__init__()
+        self.Joueur = Joueur().__init__()
         self.tablier = dict({}) # tablier de 16 cases avec id et valeur de la piece posée
         #-------------------------------
         self.i: int = 0
@@ -19,6 +21,15 @@ class Tablier():
 
     def add(self, key, value):
         self.tablier[key] = value
+
+    def piecePourAdversaire(self, idPiece: str, joueur: Joueur):
+        if self.isPieceValide(idPiece) != None:
+            joueur.setPieceAttribuee(idPiece)
+            return True
+        else:
+            print("La piece n'est pas au bon format. Ex: MRG1")
+
+
 
     def isCaseValide(self, idCase: str):
         # à modifier avec une recherche de valeur dans une liste à voir si plus rapide (méthode des LU)
@@ -37,23 +48,24 @@ class Tablier():
                             if idPiece == color + shape + size + dug:
                                 return True
 
-    def poserPiece(self, idCase: str, idPiece: str, pioche: Pioche):
+    def poserPiece(self, joueur: Joueur, idCase: str, pioche: Pioche):
 
         if self.isCaseValide(idCase) != None:
-            if self.isPieceValide(idPiece) != None:
-                if pioche.__getitem__(idPiece):
-                    # si pas d'objet piece alors on met u piece
-                    if self.tablier[idCase] == None:
-                        # si la piece n'est pas None alors elle n'est pas encore posée
-                        self.tablier[idCase] = idPiece
-                        pioche.__setitem__(idPiece, None)
-                    else:
-                        print("La position {0} est déjà occupée !".format(idCase))
-            else:
-                print("La piece n'est pas au bon format ex: MRG1")
+            if pioche.__getitem__(joueur.pieceAttribuee):
+                # si la piece est dans la pioche
+                if self.tablier[idCase] == None:
+                    # si la piece n'est pas None alors elle n'est pas encore posée
+                    self.tablier[idCase] = joueur.pieceAttribuee
+                    pioche.__setitem__(joueur.pieceAttribuee, None)
+                    joueur.pieceAttribuee = None
+                else:
+                    print("La position {0} est déjà occupée !".format(idCase))
         else:
             print("La case n'est pas comprise entre A..D et 1..4")
 
+    """
+    Redéfinir la fonction pour les deux autres valeur de sorties
+    """
     def isQuarto(self, idPiece1: str, idPiece2: str, idPiece3: str, idPiece4: str):
         #NbAttrEnCommun: int = 0
         isAttrEnCommun: bool = False
@@ -65,7 +77,6 @@ class Tablier():
                     for attr3 in idPiece3:
                         for attr4 in idPiece4:
                             if attr1 == attr2 and attr2 == attr3 and attr3 == attr4:
-                                #print(attr1, attr2, attr3, attr4) # ligne pour débuguer
                                 #NbAttrEnCommun += 1
                                 isAttrEnCommun = True
                                 #listAttrEnCommun.append(attr4)
@@ -103,16 +114,21 @@ idPiece4: str = 'MCP0'
 
 p1 = Pioche()
 t1 = Tablier()
+j1 = Joueur()
+j2 = Joueur()
 
 # t1.showTablier()
 # print("////////////////////////////////////")
 # p1.showPieces()
 
 # print("//////////////On pose les pièces//////////////////////")
-t1.poserPiece(idCase,idPiece ,p1)
-t1.poserPiece(idCase2,idPiece2 ,p1)
-t1.poserPiece(idCase3,idPiece3 ,p1)
-t1.poserPiece(idCase4,idPiece4 ,p1)
+t1.piecePourAdversaire(idPiece2, j2)
+t1.poserPiece(j2, idCase ,p1)
+t1.piecePourAdversaire(idPiece3, j1)
+t1.poserPiece(j1, idCase2 ,p1)
+# t1.poserPiece(idCase2,idPiece2 ,p1)
+# t1.poserPiece(idCase3,idPiece3 ,p1)
+# t1.poserPiece(idCase4,idPiece4 ,p1)
 # print("////////////////////////////////////")
 
 # print("////////////////////////////////////")
