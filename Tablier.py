@@ -1,14 +1,14 @@
-from Pioche import Pioche
-from Joueur import Joueur
+import Pioche
+import Joueur
 
 class Tablier():
 
     def __init__(self):
-        self.Pioche = Pioche().__init__()
-        self.Joueur = Joueur().__init__()
-        self.tablier = dict({}) # tablier de 16 cases avec id et valeur de la piece posée
+        #self.Pioche = Pioche().__init__()
+        # self.Joueur = Joueur().__init__()
+        self.tablier = dict({}) # tablier de 16 cases avec id et valeur de la piece posée as an object
         #-------------------------------
-        self.i: int = 0
+        # self.i: int = 0
         for lettre in ("ABCD"):
             for val in ("1234"):
                 self.tablier[lettre+val] = None
@@ -48,13 +48,13 @@ class Tablier():
                 # si la piece est dans la pioche
                 if self.tablier[idCase] == None:
                     # si la piece n'est pas None alors elle n'est pas encore posée
-                    self.tablier[idCase] = joueur.pieceAttribuee
-                    pioche.__setitem__(joueur.pieceAttribuee, None)
+                    self.tablier[idCase] = joueur.pieceAttribuee # la case prend les attributes de la piece
+                    pioche.__setitem__(joueur.pieceAttribuee, None) # on retire la piece de la pioche en la supp
                     joueur.pieceAttribuee = None
                 else:
                     print("La position {0} est déjà occupée !".format(idCase))
         else:
-            print("La case n'est pas comprise entre A..D et 1..4")
+            print("La case n'est pas au bon format")
     """ 
     Redéfinir la fonction pour les deux autres valeur de sorties
     """
@@ -63,7 +63,7 @@ class Tablier():
         isAttrEnCommun: bool = False
         #listAttrEnCommun: list = []
 
-        if idPiece1 and idPiece2 and idPiece3 and idPiece4 != None:
+        if idPiece1 and idPiece2 and idPiece3 and idPiece4:
             for attr1 in idPiece1:
                 for attr2 in idPiece2:
                     for attr3 in idPiece3:
@@ -81,12 +81,19 @@ class Tablier():
 
     def isLigneQuarto(self): # renvoie True si Quarto,  False Sinon
         for i in ('1234'):
-            if self.isQuarto(self.tablier['A'+i], self.tablier['B'+i], self.tablier['C'+i], self.tablier['D'+i]) == True:
+            if self.isQuarto(self.tablier['A'+i], self.tablier['B'+i], self.tablier['C'+i], self.tablier['D'+i]) == True: # virer le == True
                 return True
         return False
 
     def isColonneQuarto(self): # renvoie True si Quarto,  False Sinon
         for lettre in ('ABCD'):
-            if self.isQuarto(self.tablier[lettre+'1'], self.tablier[lettre+'2'], self.tablier[lettre+'3'], self.tablier[lettre+'4']) == True:
+            if self.isQuarto(self.tablier[lettre+'1'], self.tablier[lettre+'2'], self.tablier[lettre+'3'], self.tablier[lettre+'4']) == True: # virer le == True
                 return True
         return False
+
+    def isCarreQuarto(self):
+        pass
+
+if __name__ == "__main__":
+    t1 = Tablier()
+    t1.showTablier()

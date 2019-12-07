@@ -17,7 +17,7 @@ class Game(object):
     def isAborted(self, input):
         if input == "quitter" or "q" or "QUITTER" or "Q":
             self.aborted = True
-            print("Jeu abandonné")
+            print("Partie ABORTED !!")
         else:
             return input
 
@@ -82,9 +82,11 @@ class Game(object):
             print("Le joueur 1 choisit une pièce pour le joueur 2, dans la liste suivante : \n")
             self.Pioche.showPieces()
             piece = input("Id de la pièce choisis : ")
-            if piece == 'q':
+
+            if piece == 'q' or piece == 'Q' or piece == 'quitter':
                 self.aborted = True
                 print("ABANDON DE LA PARTIE ......")
+
             else:
                 self.Tablier.piecePourAdversaire(piece, self.Joueur2)
                 print("Le joueur 2 indique la case : ")
