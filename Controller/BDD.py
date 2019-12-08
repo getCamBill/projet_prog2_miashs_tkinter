@@ -122,7 +122,7 @@ def first():
         # create Joueur table
         create_table(conn, sql_create_projects_table)
     else:
-        print("Erreur! Impossible de créer une connection avec la Controller.")
+        print("Erreur! Impossible de créer une connection avec le Controller.")
 
     """ 
         TRIGGER A FINIR ...
@@ -150,21 +150,21 @@ if __name__ == '__main__':
     database: str = "./Controller/UserDatabase.db"
     conn = create_connection(database)
 
-    with conn:
-        # create a new joueur
-        user = ('kmi', 0, 1)
-        user_id = create_joueur(conn, user)
-
-    with conn:
-        update_partie_joueur(conn, (1, 0, 'kmi'))
-
-    with conn:
-        print("1. Classement des joueurs par victoire:")
-        select_joueur_by_victory(conn)
-
-    # supp d'un joueur
-    with conn:
-        delete_joueur(conn, 'kmi')
+    # with conn:
+    #     # create a new joueur
+    #     user = ('kmi', 0, 1)
+    #     user_id = create_joueur(conn, user)
+    #
+    # with conn:
+    #     update_partie_joueur(conn, (1, 0, 'kmi'))
+    #
+    # with conn:
+    #     print("1. Classement des joueurs par victoire:")
+    #     select_joueur_by_victory(conn)
+    #
+    # # supp d'un joueur
+    # with conn:
+    #     delete_joueur(conn, 'kmi')
 
     with conn:
         print("1. Classement des joueurs par victoire:")

@@ -3,16 +3,19 @@ from Model.Pioche import Pioche
 from Model.Joueur import Joueur
 from Model.Etat import Etat
 from Model.Tour import Tour
-
+from Controller.BDD import *
 
 class Game(object):
 
-    def __init__(self):
+    def __init__(self, joueur1: str, joueur2: str):
+        self.database: str = "./Controller/UserDatabase.db"
+        self.conn = create_connection(self.database)
+
         self.Etat = Etat()
         self.Tablier = Tablier()
         self.Pioche = Pioche()
-        self.Joueur1 = Joueur()
-        self.Joueur2 = Joueur()
+        self.Joueur1 = Joueur(joueur1)
+        self.Joueur2 = Joueur(joueur2)
         self.Tour = Tour()
         self.aborted = False
 
@@ -72,6 +75,7 @@ class Game(object):
 
         case = input("Id de la case : ")
         self.Tablier.poserPiece(self.Joueur2, case, self.Pioche)
+
     def start(self):
         self.showRules()
         self.aborted = False
@@ -83,15 +87,15 @@ class Game(object):
             if i % 2 == 0:  # un tour sur deux un joueur peux jouer
                 self.Joueur2.jouer = True
                 self.Joueur1.jouer = False
-                joueur: str = "Joueur 2"
-                donneur: str = "Joueur 1"
+                joueur: str = self.Joueur2.pseudo
+                donneur: str = self.Joueur1.pseudo
             else:
                 self.Joueur1.jouer = True
                 self.Joueur2.jouer = False
-                joueur: str = "Joueur 1"
-                donneur: str = "Joueur 2"
+                joueur: str = self.Joueur1.pseudo
+                donneur: str = self.Joueur2.pseudo
 
-            print("Le joueur {0} choisit une pièce pour l'adversaire, dans la liste suivante : \n".format(donneur))
+            print("Le joueur {0} choisit une pièce pour {1}, dans la liste suivante : \n".format(donneur, joueur))
             self.Pioche.showPieces()
 
             piece = input("Id de la pièce choisis : ")
@@ -110,4 +114,13 @@ class Game(object):
                 self.Tablier.isColonneQuarto():
                     print("QUARTO !! \n    FIN DE LA PARTIE ......")
                     print("{0} à gagné face à {1}".format(joueur, donneur))
+
+                    if self.Joueur1.jouer:
+                        self.Joueur1.setInfoJoueur(1, 0)
+                        self.Joueur2.setInfoJoueur(0, 1)
+                    if self.Joueur2.jouer:
+                        self.Joueur2.setInfoJoueur(1, 0)
+                        self.Joueur1.setInfoJoueur(0, 1)
+
+                    select_joueur_by_victory(self.conn)
                     self.aborted = True
