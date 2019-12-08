@@ -2,6 +2,8 @@ from Tablier import Tablier
 from Pioche import Pioche
 from Joueur import Joueur
 from Etat import Etat
+from Tour import Tour
+import random
 
 class Game(object):
 
@@ -11,7 +13,7 @@ class Game(object):
         self.Pioche = Pioche()
         self.Joueur1 = Joueur()
         self.Joueur2 = Joueur()
-
+        self.Tour = Tour()
         self.aborted = False
 
     def isAborted(self, input):
@@ -70,43 +72,45 @@ class Game(object):
 
         case = input("Id de la case : ")
         self.Tablier.poserPiece(self.Joueur2, case, self.Pioche)
-
-    #def showEtatJeu(self):
-
     def start(self):
         self.showRules()
         self.aborted = False
 
+        j: str = ""
         i: int = 0
-        while self.aborted == False:
-            print("Le joueur 1 choisit une pièce pour le joueur 2, dans la liste suivante : \n")
+        while not self.aborted:
+
+            if i % 2 == 0:  # un tour sur deux un joueur peux jouer
+                self.Joueur2.jouer = True
+                self.Joueur1.jouer = False
+                joueur: str = "Joueur 2"
+                donneur: str = "Joueur 1"
+            else:
+                self.Joueur1.jouer = True
+                self.Joueur2.jouer = False
+                joueur: str = "Joueur 1"
+                donneur: str = "Joueur 2"
+
+            print("Le joueur {0} choisit une pièce pour l'adversaire, dans la liste suivante : \n".format(donneur))
             self.Pioche.showPieces()
+
             piece = input("Id de la pièce choisis : ")
 
-            if piece == 'q' or piece == 'Q' or piece == 'quitter':
-                self.aborted = True
-                print("ABANDON DE LA PARTIE ......")
+            self.Tablier.piecePourAdversaire(piece, self.Joueur2)
+            print("Le joueur {0} indique la case : ".format(joueur))
+            self.Tablier.showTablier()
 
-            else:
-                self.Tablier.piecePourAdversaire(piece, self.Joueur2)
-                print("Le joueur 2 indique la case : ")
-                self.Tablier.showTablier()
-                case = input("Id de la case : ")
-                if case == 'q':
+            case = input("Id de la case : ")
+
+            self.Tablier.poserPiece(self.Joueur2, case, self.Pioche)
+            i += 1
+            if i > 3: # on appelle les fonctions seulement au bout de 4 tours
+                if self.Tablier.isDiagoQuarto() or \
+                self.Tablier.isLigneQuarto() or \
+                self.Tablier.isColonneQuarto():
+                    print("QUARTO !! \n    FIN DE LA PARTIE ......")
+                    print("{0} à gagné face à {1}".format(joueur, donneur))
                     self.aborted = True
-                    print("ABANDON DE LA PARTIE ......")
-                else:
-                    self.Tablier.poserPiece(self.Joueur2, case, self.Pioche)
-                    i += 1
-                    if i > 3: # on appelle les fonctions seulement au bout de 4 tour
-                        if self.Tablier.isDiagoQuarto() or \
-                        self.Tablier.isLigneQuarto() or \
-                        self.Tablier.isColonneQuarto():
-                            print("QUARTO !! \n    FIN DE LA PARTIE ......")
-                            self.aborted = True
 
-
-
-
-if __name__ == "__main__":
-    Game().start()
+# if __name__ == "__main__":
+#     Game().start()

@@ -14,7 +14,7 @@ class Pioche(object):
 
     def showPieces(self):
         print("Pièces disponibles : ")
-        [print("Id : ",ele) for ele in self.Pioche.items()]
+        [print("Id : ",ele) for ele in self.Pioche.keys()]
 
 
     def __getitem__(self, item):

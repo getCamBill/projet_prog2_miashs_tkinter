@@ -91,9 +91,5 @@ class Tablier():
                 return True
         return False
 
-    def isCarreQuarto(self):
+    def isCarreQuarto(self): # méthode à dev pour un level sup du jeux
         pass
-
-if __name__ == "__main__":
-    t1 = Tablier()
-    t1.showTablier()
