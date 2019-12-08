@@ -1,0 +1,15 @@
+
+xpython:S3776="TRefactor this function to reduce its Cognitive Complexity from 23 to the 15 allowed.(Ş²Óıÿÿÿÿ8ÅÆ°ïá-
+vpython:S100"SRename method "isCaseValide" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(õİµèşÿÿÿÿ8…š“äá-
+xpython:S100"ZRename method "piecePourAdversaire" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(¹Šı–8­‡¢åá-
+qpython:S116"NRename this field "Pioche" to match the regular expression ^[_a-z][_a-z0-9]*$.(ÖÙÕªüÿÿÿÿ8÷ Şáá-
+qpython:S116"NRename this field "Joueur" to match the regular expression ^[_a-z][_a-z0-9]*$.(Û¶‚¶ûÿÿÿÿ8“ÁÃæá-
+=python:S125H"Remove this commented out code.(óó‹¤8ÅÆ°ïá-
+5python:S1700	"Rename field "tablier"(Ïª–8÷ Şáá-
+rpython:S100="ORename method "isQuarto" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Ş²Óıÿÿÿÿ8ÅÆ°ïá-
+tpython:S100X"VRename method "isColonneQuarto" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Í«ñ8ÅÆ°ïá-
+wpython:S100N"TRename method "isDiagoQuarto" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(à‡ÙÜıÿÿÿÿ8ÅÆ°ïá-
+ppython:S100"RRename method "showTablier" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Šÿ¸Ô8÷ Şáá-
+rpython:S100#"TRename method "isPieceValide" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Îœ‹Â8ÅÆ°ïá-
+wpython:S100R"TRename method "isLigneQuarto" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(£Šü®øÿÿÿÿ8ÅÆ°ïá-
+tpython:S100,"QRename method "poserPiece" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(õä ßùÿÿÿÿ8ÅÆ°ïá-

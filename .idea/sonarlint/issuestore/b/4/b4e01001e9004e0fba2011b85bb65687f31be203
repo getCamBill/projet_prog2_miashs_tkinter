@@ -1,0 +1,5 @@
+
+jpython:S116"NRename this field "Pioche" to match the regular expression ^[_a-z][_a-z0-9]*$.(ф╨Г┌№    
+rpython:S116"ORename this field "idPiece" to match the regular expression ^[_a-z][_a-z0-9]*$.(┌╬Щ╘■    8┐т▓▀с-
+tpython:S100"QRename method "showPieces" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(╕ц°╞°    8·т┬рс-
+2python:S1700"Rename field "Pioche"(ф╨Г┌№    
