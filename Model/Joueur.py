@@ -8,8 +8,10 @@ class Joueur(object):
         self.pseudo: str = pseudo
         self.jouer: bool = False
 
-        self.database: str = "./Controller/UserDatabase.db"
+        self.database: str = 'C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db'
         self.conn = create_connection(self.database)
+
+        create_joueur(self.conn, (self.pseudo, 0, 0))
 
     def setPieceAttribuee(self, idPiece: str):
         self.pieceAttribuee = idPiece

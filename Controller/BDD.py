@@ -4,13 +4,14 @@ from sqlite3 import Error
 
 def create_connection(db_file):
     """ créer une connexion de base de données à une base de données SQLite """
-    conn = None
+    connection = None
     try:
-        conn = sqlite3.connect(db_file)
-        return conn
+        connection = sqlite3.connect(db_file)
+        return connection
     except Error as e:
         print(e)
-    return conn
+    return connection
+
 
 def create_table(conn, create_table_sql):
     """ créer une table à partir de l'instruction create_table_sql
@@ -24,6 +25,7 @@ def create_table(conn, create_table_sql):
     except Error as e:
         print(e)
 
+
 def create_joueur(conn, user):
     """
     Créer un nouveau joueur dans la table joueur
@@ -36,6 +38,7 @@ def create_joueur(conn, user):
     cur = conn.cursor()
     cur.execute(sql, user)
     return cur.lastrowid
+
 
 def update_partie_joueur(conn, task):
     """
@@ -52,6 +55,7 @@ def update_partie_joueur(conn, task):
     cur.execute(sql, task)
     conn.commit()
 
+
 def delete_joueur(conn, pseudo):
     """
     supprime un joueur de la bdd
@@ -64,6 +68,7 @@ def delete_joueur(conn, pseudo):
     cur.execute(sql, (pseudo,))
     conn.commit()
 
+
 def delete_all(conn):
     """
         supprime tous les joueurs
@@ -74,6 +79,7 @@ def delete_all(conn):
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
+
 
 def select_all_joueurs(conn):
     """
@@ -105,8 +111,9 @@ def select_joueur_by_victory(conn):
     for row in rows:
         print(row)
 
+
 def first():
-    database: str = "./Controller/UserDatabase.db"
+    database: str = "C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db"
 
     sql_create_projects_table = """ CREATE TABLE IF NOT EXISTS joueur (
                                                 id integer PRIMARY KEY,
@@ -114,6 +121,7 @@ def first():
                                                 win integer,
                                                 lose integer
                                             ); """
+
     # create a database connection
     conn = create_connection(database)
 
@@ -143,21 +151,25 @@ def first():
 
 
 if __name__ == '__main__':
-
-    first()
+    # first()
 
     # create a database connection
-    database: str = "./Controller/UserDatabase.db"
+    database: str = "UserDatabase.db"
     conn = create_connection(database)
+
+    with conn:
+        print("1. Classement des joueurs par victoire:")
+        select_joueur_by_victory(conn)
+
 
     # with conn:
     #     # create a new joueur
-    #     user = ('kmi', 0, 1)
+    #     user = ('kmi', 0, 0)
     #     user_id = create_joueur(conn, user)
     #
     # with conn:
     #     update_partie_joueur(conn, (1, 0, 'kmi'))
-    #
+
     # with conn:
     #     print("1. Classement des joueurs par victoire:")
     #     select_joueur_by_victory(conn)
@@ -166,6 +178,9 @@ if __name__ == '__main__':
     # with conn:
     #     delete_joueur(conn, 'kmi')
 
-    with conn:
-        print("1. Classement des joueurs par victoire:")
-        select_joueur_by_victory(conn)
+    # with conn:
+    #     delete_all(conn)
+    #
+    # with conn:
+    #     print("1. Classement des joueurs par victoire:")
+    #     select_joueur_by_victory(conn)

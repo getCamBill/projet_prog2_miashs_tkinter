@@ -1,3 +1,5 @@
+import os
+
 from Model.Tablier import Tablier
 from Model.Pioche import Pioche
 from Model.Joueur import Joueur
@@ -5,17 +7,20 @@ from Model.Etat import Etat
 from Model.Tour import Tour
 from Controller.BDD import *
 
+
 class Game(object):
 
-    def __init__(self, joueur1: str, joueur2: str):
-        self.database: str = "./Controller/UserDatabase.db"
+    def __init__(self, joueur1: Joueur = None, joueur2: Joueur = None):
+        # package_dir = os.path.abspath(os.path.dirname(__file__))
+        # self.database: str = os.path.join(package_dir, 'UserDatabase.db')
+        self.database: str = 'C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db'
         self.conn = create_connection(self.database)
 
         self.Etat = Etat()
         self.Tablier = Tablier()
         self.Pioche = Pioche()
-        self.Joueur1 = Joueur(joueur1)
-        self.Joueur2 = Joueur(joueur2)
+        self.Joueur1: Joueur = joueur1
+        self.Joueur2: Joueur = joueur2
         self.Tour = Tour()
         self.aborted = False
 
@@ -77,8 +82,9 @@ class Game(object):
         self.Tablier.poserPiece(self.Joueur2, case, self.Pioche)
 
     def start(self):
-        self.showRules()
+        # self.showRules()
         self.aborted = False
+        self.conn = create_connection(self.database)
 
         j: str = ""
         i: int = 0
@@ -107,20 +113,36 @@ class Game(object):
             case = input("Id de la case : ")
 
             self.Tablier.poserPiece(self.Joueur2, case, self.Pioche)
-            i += 1
-            if i > 3: # on appelle les fonctions seulement au bout de 4 tours
+            i += 1 # on incrémente pour chaque tour
+            if i > 3:  # on appelle les fonctions seulement au bout de 4 tours
                 if self.Tablier.isDiagoQuarto() or \
-                self.Tablier.isLigneQuarto() or \
-                self.Tablier.isColonneQuarto():
+                        self.Tablier.isLigneQuarto() or \
+                        self.Tablier.isColonneQuarto():
                     print("QUARTO !! \n    FIN DE LA PARTIE ......")
                     print("{0} à gagné face à {1}".format(joueur, donneur))
 
                     if self.Joueur1.jouer:
+                        # update_partie_joueur(self.conn, (1, 0, self.Joueur1.pseudo))
+                        # update_partie_joueur(self.conn, (0, 1, self.Joueur2.pseudo))
                         self.Joueur1.setInfoJoueur(1, 0)
                         self.Joueur2.setInfoJoueur(0, 1)
                     if self.Joueur2.jouer:
                         self.Joueur2.setInfoJoueur(1, 0)
                         self.Joueur1.setInfoJoueur(0, 1)
+                        # update_partie_joueur(self.conn, (1, 0, self.Joueur2.pseudo))
+                        # update_partie_joueur(self.conn, (0, 1, self.Joueur1.pseudo))
 
                     select_joueur_by_victory(self.conn)
                     self.aborted = True
+    def show(self):
+        select_joueur_by_victory(self.conn)
+        print("---------")
+
+
+if __name__ == "__main__":
+    j1 = Joueur('kmi')
+    j2 = Joueur('kol')
+    g = Game(j1,j2)
+    g.start()
+    g.show()
+
