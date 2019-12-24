@@ -96,6 +96,7 @@ def select_all_joueurs(conn):
     for row in rows:
         print(row)
 
+    conn.commit()
 
 def select_joueur_by_victory(conn):
     """
@@ -106,11 +107,10 @@ def select_joueur_by_victory(conn):
     """
     cur = conn.cursor()
     cur.execute("SELECT * FROM joueur ORDER BY win DESC")
-
     rows = cur.fetchall()
-
-    for row in rows:
-        print(row)
+    # for row in rows:
+    #     print(row)
+    return list(rows)
 
 
 def first():

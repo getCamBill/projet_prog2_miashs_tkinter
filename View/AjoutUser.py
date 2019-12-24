@@ -1,6 +1,6 @@
 from Controller.BDD import *
 
-first()
+# first()
 # create a database connection
 database: str = "C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db"
 conn = create_connection(database)

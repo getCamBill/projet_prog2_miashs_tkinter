@@ -1,5 +1,6 @@
 # ==============================================================================
 from tkinter import *
+from tkinter import ttk
 from Model.Tablier import Tablier
 from Model.Pioche import Pioche
 from Model.Joueur import Joueur
@@ -15,9 +16,26 @@ LARGEUR = 500
 HAUTEUR = 400
 # ------------------------------------------------------------------------------
 class Quarto():
-
     # ----------------------------------------------------------------------------
     def __init__(self, fenetre, joueur1: Joueur = None, joueur2: Joueur = None):
+        # --------------------------------------------------------------------------
+        self.fenetre = fenetre
+        self.fenetre.title("Quarto !! ")
+
+        self.n = ttk.Notebook(self.fenetre)  # Création du système d'onglets
+        self.n.pack()
+        self.o1 = ttk.Frame(self.n)  # Ajout de l'onglet 1
+        self.o1.pack()
+
+        self.o2 = ttk.Frame(self.n)  # Ajout de l'onglet 2
+        self.o2.pack()
+
+        self.n.add(self.o1, text='Quarto')  # Nom de l'onglet 1
+        self.n.add(self.o2, text='Joueurs')  # Nom de l'onglet 2
+
+        # Button(o1, text='Quitter', command=self.fenetre.destroy).pack(padx=100, pady=100)
+        # Button(o2, text='En attente', command=None).pack(padx=100, pady=100)
+        # --------------------------------------------------------------------------
         self.database: str = 'C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db'
         self.conn = create_connection(self.database)
         # --------------------------------------------------------------------------
@@ -29,17 +47,15 @@ class Quarto():
         self.Tour: Tour = Tour()
         self.aborted: bool = False
         """create the main window and pack the widgets"""
+
         # --------------------------------------------------------------------------
-        self.fenetre = fenetre
-        self.fenetre.title("Quarto !! ")
-        # --------------------------------------------------------------------------
-        self.framePlateau = Frame(self.fenetre, width=200, height=400, bg="grey")
+        self.framePlateau = Frame(self.o1, width=200, height=400, bg="grey")
         self.framePlateau.grid(row=0, column=0, padx=10, pady=5)
 
-        self.framePieces = Frame(self.fenetre, width=200, height=400, bg="grey")
+        self.framePieces = Frame(self.o1, width=200, height=400, bg="grey")
         self.framePieces.grid(row=0, column=2, padx=10, pady=5)
 
-        self.frameCentre = Frame(self.fenetre, width=200, height=400)
+        self.frameCentre = Frame(self.o1, width=200, height=400)
         self.frameCentre.grid(row=0, column=1, padx=10, pady=5)
         # --------------------------------------------------------------------------
         self.new_game()
