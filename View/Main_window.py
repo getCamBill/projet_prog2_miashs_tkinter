@@ -1,42 +1,42 @@
-# import winsound
-# import time
-# winsound.PlaySound('fichier_son.wav', winsound.SND_FILENAME|winsound.SND_ASYNC)
-# time.sleep(5)
-# winsound.PlaySound(None, 0)
+import winsound
+import time
+winsound.PlaySound('fichier_son.wav', winsound.SND_FILENAME|winsound.SND_ASYNC)
+time.sleep(5)
+winsound.PlaySound(None, 0)
 
-# ## Menus
-#
-# from tkinter import *
-#
-#
-# def fctSousMenu1():  # Action associée au sous-menu 1 du menu 1
-#     print('Action1')
-#
-#
-# jeu = Tk()
-#
-# jeu.option_add('*tearOff', FALSE)  # Nécessaire avec windows
-#
-# menubar = Menu(jeu)  # Création d'un objet "barre de menus"
-# jeu['menu'] = menubar  # Association de l'objet à la fenêtre
-#
-# # Ajout de menus
-# menu1 = Menu(menubar)
-# menu2 = Menu(menubar)
-#
-# # Ajout de sous-menus
-# menubar.add_cascade(menu=menu1, label='Menu 1')
-# menubar.add_cascade(menu=menu2, label='Menu 2')
-#
-# # Association de fonctions aux menus ou sous-menus
-# menu1.add_command(label='Action 1', command=fctSousMenu1)
-# menu1.add_separator()  # Barre de séparation
-#
-# menu1.add_command(label='Action 2', command=None)
-#
-# jeu.mainloop()
+## Menus
 
-## Onglets
+from tkinter import *
+
+
+def fctSousMenu1():  # Action associée au sous-menu 1 du menu 1
+    print('Action1')
+
+
+jeu = Tk()
+
+jeu.option_add('*tearOff', FALSE)  # Nécessaire avec windows
+
+menubar = Menu(jeu)  # Création d'un objet "barre de menus"
+jeu['menu'] = menubar  # Association de l'objet à la fenêtre
+
+# Ajout de menus
+menu1 = Menu(menubar)
+menu2 = Menu(menubar)
+
+# Ajout de sous-menus
+menubar.add_cascade(menu=menu1, label='Menu 1')
+menubar.add_cascade(menu=menu2, label='Menu 2')
+
+# Association de fonctions aux menus ou sous-menus
+menu1.add_command(label='Action 1', command=fctSousMenu1)
+menu1.add_separator()  # Barre de séparation
+
+menu1.add_command(label='Action 2', command=None)
+
+jeu.mainloop()
+
+# Onglets
 
 from tkinter import *
 from tkinter import ttk

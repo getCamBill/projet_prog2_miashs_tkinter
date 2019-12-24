@@ -11,18 +11,17 @@ from Controller.BDD import *
 class Game(object):
 
     def __init__(self, joueur1: Joueur = None, joueur2: Joueur = None):
-        # package_dir = os.path.abspath(os.path.dirname(__file__))
-        # self.database: str = os.path.join(package_dir, 'UserDatabase.db')
+
         self.database: str = 'C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db'
         self.conn = create_connection(self.database)
 
-        self.Etat = Etat()
-        self.Tablier = Tablier()
-        self.Pioche = Pioche()
+        self.Etat: Etat = Etat()
+        self.Tablier: Tablier = Tablier()
+        self.Pioche: Pioche = Pioche()
         self.Joueur1: Joueur = joueur1
         self.Joueur2: Joueur = joueur2
-        self.Tour = Tour()
-        self.aborted = False
+        self.Tour: Tour = Tour()
+        self.aborted: bool = False
 
     def isAborted(self, input):
         if input == "quitter" or "q" or "QUITTER" or "Q":
@@ -132,7 +131,6 @@ class Game(object):
                         # update_partie_joueur(self.conn, (1, 0, self.Joueur2.pseudo))
                         # update_partie_joueur(self.conn, (0, 1, self.Joueur1.pseudo))
 
-                    select_joueur_by_victory(self.conn)
                     self.aborted = True
     def show(self):
         select_joueur_by_victory(self.conn)
@@ -140,8 +138,8 @@ class Game(object):
 
 
 if __name__ == "__main__":
-    j1 = Joueur('kmi')
-    j2 = Joueur('kol')
+    j1 = Joueur('A')
+    j2 = Joueur('B')
     g = Game(j1,j2)
     g.start()
     g.show()

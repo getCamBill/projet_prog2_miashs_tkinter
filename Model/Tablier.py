@@ -6,6 +6,7 @@ class Tablier():
     def __init__(self):
         #self.Pioche = Pioche().__init__()
         # self.Joueur = Joueur().__init__()
+
         self.tablier = dict({}) # tablier de 16 cases avec id et valeur de la piece posée as an object
         #-------------------------------
         # self.i: int = 0
@@ -53,6 +54,9 @@ class Tablier():
                     joueur.pieceAttribuee = None
                 else:
                     print("La position {0} est déjà occupée !".format(idCase))
+                    return 1
+            else:
+                return 1
         else:
             print("La case n'est pas au bon format")
     """ 

@@ -15,7 +15,7 @@ while choix != 'q':
                     "5/ Ajouter victoire \n"
                     "6/ Ajouter défaite \n"
                     "7/ Tout supprimer \n"
-                  "\nChoix : ")
+                  "\nChoix : \nq pour quitter  ")
 
     if choix == '1':
         pseudo = input("\nEntrer un pseudo : ")

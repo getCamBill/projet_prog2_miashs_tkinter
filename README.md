@@ -1,4 +1,7 @@
 # Quarto
 Version sans IHM
-Classe Game à Run pour jouer
+Fichier Quarto.py à Run pour jouer
+
+Version avec IHM dans Model => A.py à Run pour jouer
+    - correction des bugs en cours
 

@@ -16,12 +16,15 @@ class Pioche(object):
         print("Pièces disponibles : ")
         [print("Id : ",ele) for ele in self.Pioche.keys()]
 
-
+    def listPieceDispo(self):
+        return [ele for ele in self.Pioche.keys()]
     def __getitem__(self, item):
         try:
             return self.Pioche[item]
         except:
             print("La pièce est déjà posée ! ")
+
+
 
     def __setitem__(self, key, value):
         del self.Pioche[key]
@@ -29,4 +32,6 @@ class Pioche(object):
 if __name__ == "__main__":
     p1 = Pioche()
     p1.showPieces()
-    print(p1.Pioche['MRG1'].showCarac())
+    # print(p1.Pioche['MRG1'].showCarac())
+    print(p1.Pioche.items())
+    print(p1.Pioche.get('MRG1'))

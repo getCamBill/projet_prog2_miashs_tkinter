@@ -37,6 +37,7 @@ def create_joueur(conn, user):
               VALUES(?,?,?) '''
     cur = conn.cursor()
     cur.execute(sql, user)
+    conn.commit()
     return cur.lastrowid
 
 
@@ -135,19 +136,19 @@ def first():
     """ 
         TRIGGER A FINIR ...
     """
-    # conn.execute('''DROP TRIGGER IF EXISTS ajout_user''')
-    # conn.execute('''CREATE TRIGGER ajout_user
-    #              BEFORE INSERT ON joueur
-    #              BEGIN
-    #                 CASE
-    #                     WHEN (SELECT pseudo FROM joueur WHERE NEW.pseudo <> pseudo);
-    #                      THEN
-    #                     INSERT INTO joueur (pseudo,win,lose) VALUES (NEW.pseudo,NEW.win,NEW.lose);
-    #                 END;
-    #
-    #              END
-    #              ;
-    #              ''')
+    conn.execute('''DROP TRIGGER IF EXISTS ajout_user''')
+    conn.execute('''CREATE TRIGGER ajout_user
+                 BEFORE INSERT ON joueur
+                 BEGIN
+                    CASE
+                        WHEN (SELECT pseudo FROM joueur WHERE NEW.pseudo <> pseudo);
+                         THEN
+                        INSERT INTO joueur (pseudo,win,lose) VALUES (NEW.pseudo,NEW.win,NEW.lose);
+                    END;
+
+                 END
+                 ;
+                 ''')
 
 
 if __name__ == '__main__':
@@ -162,25 +163,27 @@ if __name__ == '__main__':
         select_joueur_by_victory(conn)
 
 
-    # with conn:
-    #     # create a new joueur
-    #     user = ('kmi', 0, 0)
-    #     user_id = create_joueur(conn, user)
-    #
-    # with conn:
-    #     update_partie_joueur(conn, (1, 0, 'kmi'))
+    with conn:
+        # create a new joueur
+        user = ('kmi', 0, 0)
+        user_id = create_joueur(conn, user)
 
-    # with conn:
-    #     print("1. Classement des joueurs par victoire:")
-    #     select_joueur_by_victory(conn)
-    #
-    # # supp d'un joueur
-    # with conn:
-    #     delete_joueur(conn, 'kmi')
+    with conn:
+        update_partie_joueur(conn, (1, 0, 'kmi'))
+
+    with conn:
+        print("1. Classement des joueurs par victoire:")
+        select_joueur_by_victory(conn)
+
+    # supp d'un joueur
+    with conn:
+        delete_joueur(conn, 'kmi')
+        delete_joueur(conn, 'kol')
+
 
     # with conn:
     #     delete_all(conn)
     #
-    # with conn:
-    #     print("1. Classement des joueurs par victoire:")
-    #     select_joueur_by_victory(conn)
+    with conn:
+        print("1. Classement des joueurs par victoire:")
+        select_joueur_by_victory(conn)

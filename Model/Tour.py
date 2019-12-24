@@ -1,4 +1,4 @@
 class Tour(object):
 
     def __init__(self):
-        self.j: str = ""
+        self.tour: int = 0
