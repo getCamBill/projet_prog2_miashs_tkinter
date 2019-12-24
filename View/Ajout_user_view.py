@@ -1,67 +1,70 @@
 from Controller.BDD import *
 from tkinter import *
+from tkinter import ttk
 from PIL import *
-#
-# first()
 
-#
-# pseudo: str = input("Entrez un pseudo : ")
-# create_joueur(conn, (pseudo, 0,0))
-# select_joueur_by_victory(conn)
+class AddUser():
+    def __init__(self, onglet):
 
-root = Tk()
-root.title("Liste des Joueurs")
-# root.iconbitmap()
-# root.geometry("400x400")
+        self.root = onglet
+        # self.root.title("Liste des Joueurs")
 
-database: str = 'C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db'
-conn = create_connection(database)
-# --------------------------------------------------------------------------
-fr1 = Frame(root, width=200, height=200)
-fr1.grid(row=0, column=0)
-fr2 = Frame(root, width=200, height=200)
-fr2.grid(row=0, column=1)
-# --------------------------------------------------------------------------
+        self.database: str = 'C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db'
+        self.conn = create_connection(self.database)
+        # --------------------------------------------------------------------------
+        self.fr1 = Frame(self.root)
+        self.fr1.grid(row=0, column=0)
+        self.fr2 = Frame(self.root)
+        self.fr2.grid(row=0, column=1)
+        # --------------------------------------------------------------------------
+        self.user_name = Entry(self.fr1, width=30)
+        self.user_name.grid(row=0, column=1, padx=20)
 
-def submit():
-    # clear champ texte
-    if not user_name.get() == "":
-        conn = create_connection(database)
-        user = (user_name.get(), 0, 0)
-        create_joueur(conn, user)
-        user_name.delete(0, END)
-        montrer()
+        self.user_name_label = Label(self.fr1, text="Pseudo")
+        self.user_name_label.grid(row=0, column=0)
+        # --------------------------------------------------------------------------
 
-# --------------------------------------------------------------------------
-def montrer():
-    listbox.delete(0, END)
-    conn = create_connection(database)
-    listeJ = select_joueur_by_victory(conn)
-    for i in listeJ:
-        listbox.insert(END, i[1])
-# --------------------------------------------------------------------------
+        self.submit_btn = Button(self.fr1, text="Ajouter pseudo", command=self.submit)
+        self.submit_btn.grid(row=2, column=1, padx=10, pady=10)
+        # --------------------------------------------------------------------------
+        self.scrollbar = Scrollbar(self.fr2)
+        self.scrollbar.pack(side=RIGHT, fill=Y)
+        self.listbox = Listbox(self.fr2)
+        self.listbox.pack()
+        self.listbox.config(yscrollcommand=self.scrollbar.set)
+        self.scrollbar.config(command=self.listbox.yview)
 
-user_name = Entry(fr1, width=30)
-user_name.grid(row=0, column=1, padx=20)
+        self.montrer()
+        # --------------------------------------------------------------------------
 
-user_name_label = Label(fr1, text="Pseudo")
-user_name_label.grid(row=0, column=0)
-# --------------------------------------------------------------------------
+        # self.root.mainloop()
+    def submit(self):
+        # clear champ texte
+        if not self.user_name.get() == "":
+            user = (self.user_name.get(), 0, 0)
+            create_joueur(self.conn, user)
+            self.user_name.delete(0, END)
+            self.montrer()
 
-submit_btn = Button(fr1, text="Ajouter pseudo", command=submit)
-submit_btn.grid(row=2, column=1, padx=10, pady=10)
-# --------------------------------------------------------------------------
-scrollbar = Scrollbar(fr2)
-scrollbar.pack(side=RIGHT, fill=Y)
-listbox = Listbox(fr2)
-listbox.pack()
-# conn = create_connection(database)
-# attach listbox to scrollbar
-listbox.config(yscrollcommand=scrollbar.set)
-scrollbar.config(command=listbox.yview)
-montrer()
-# --------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
+    def montrer(self):
+        self.listbox.delete(0, END)
+        listeJ = select_joueur_by_victory(self.conn)
+        for i in listeJ:
+            self.listbox.insert(END, i[1])
+    # --------------------------------------------------------------------------
+if __name__ == '__main__':
+    fenetre = Tk()
+    fenetre.title("Quarto !! ")
 
-conn.close()
-root.mainloop()
+    n = ttk.Notebook(fenetre)  # Création du système d'onglets
 
+    n.pack()
+    o1 = ttk.Frame(n)  # Ajout de l'onglet 1
+    o1.pack()
+    n.add(o1, text='Quarto')  # Nom de l'onglet 1
+
+    o1 = Tk()
+    a = AddUser(o1)
+    fenetre.mainloop()
+    a.conn.close()

@@ -9,6 +9,7 @@ from Model.Tour import Tour
 from Controller.BDD import *
 from functools import partial
 from threading import Timer
+from View.Ajout_user_view import *
 import pygame
 from PIL import Image, ImageTk
 from random import randrange as rr, random
@@ -22,8 +23,10 @@ class Quarto():
         self.fenetre = fenetre
         self.fenetre.title("Quarto !! ")
 
+
         self.n = ttk.Notebook(self.fenetre)  # Création du système d'onglets
         self.n.pack()
+
         self.o1 = ttk.Frame(self.n)  # Ajout de l'onglet 1
         self.o1.pack()
 
@@ -33,6 +36,7 @@ class Quarto():
         self.n.add(self.o1, text='Quarto')  # Nom de l'onglet 1
         self.n.add(self.o2, text='Joueurs')  # Nom de l'onglet 2
 
+        AddUser(self.o2)
         # Button(o1, text='Quitter', command=self.fenetre.destroy).pack(padx=100, pady=100)
         # Button(o2, text='En attente', command=None).pack(padx=100, pady=100)
         # --------------------------------------------------------------------------
@@ -182,8 +186,8 @@ class Quarto():
 # --------------------------------------------------------------------------
 # ==============================================================================
 if __name__ == '__main__':
-    j1 = Joueur('A')
-    j2 = Joueur('B')
+    j1 = Joueur('Z')
+    j2 = Joueur('Y')
     fenetre = Tk()
     q = Quarto(fenetre, j1, j2)
     fenetre.mainloop()
