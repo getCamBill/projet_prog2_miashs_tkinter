@@ -14,7 +14,7 @@ class Tablier():
             for val in ("1234"):
                 self.tablier[lettre+val] = None
 
-    def showTablier(self): # méthode pour débuguer
+    def sho(self): # méthode pour débuguer
         """
 
         :return:
@@ -89,7 +89,7 @@ class Tablier():
     """ 
     Redéfinir la fonction pour les deux autres valeur de sorties
     """
-    def isQuarto(self, idPiece1: str, idPiece2: str, idPiece3: str, idPiece4: str):
+    def isAttrEnCommun(self, idPiece1: str, idPiece2: str, idPiece3: str, idPiece4: str):
         """
 
         :param idPiece1:
@@ -119,8 +119,8 @@ class Tablier():
 
         :return:
         """
-        return self.isQuarto(self.tablier['A1'], self.tablier['B2'], self.tablier['C3'], self.tablier['D4']) \
-                or self.isQuarto(self.tablier['A4'], self.tablier['B3'], self.tablier['C2'], self.tablier['D1'])
+        return self.isAttrEnCommun(self.tablier['A1'], self.tablier['B2'], self.tablier['C3'], self.tablier['D4']) \
+                or self.isAttrEnCommun(self.tablier['A4'], self.tablier['B3'], self.tablier['C2'], self.tablier['D1'])
 
     def isLigneQuarto(self): # renvoie True si Quarto,  False Sinon
         """
@@ -128,7 +128,7 @@ class Tablier():
         :return:
         """
         for i in ('1234'):
-            if self.isQuarto(self.tablier['A'+i], self.tablier['B'+i], self.tablier['C'+i], self.tablier['D'+i]) == True: # virer le == True
+            if self.isAttrEnCommun(self.tablier['A' + i], self.tablier['B' + i], self.tablier['C' + i], self.tablier['D' + i]) == True: # virer le == True
                 return True
         return False
 
@@ -138,7 +138,7 @@ class Tablier():
         :return:
         """
         for lettre in ('ABCD'):
-            if self.isQuarto(self.tablier[lettre+'1'], self.tablier[lettre+'2'], self.tablier[lettre+'3'], self.tablier[lettre+'4']) == True: # virer le == True
+            if self.isAttrEnCommun(self.tablier[lettre + '1'], self.tablier[lettre + '2'], self.tablier[lettre + '3'], self.tablier[lettre + '4']) == True: # virer le == True
                 return True
         return False
 
@@ -147,14 +147,20 @@ class Tablier():
 
         :return:
         """
-        return self.isQuarto(self.tablier['A1'], self.tablier['A2'], self.tablier['B1'], self.tablier['B2']) \
-               or self.isQuarto(self.tablier['B1'], self.tablier['B2'], self.tablier['C1'], self.tablier['C2'])\
-               or self.isQuarto(self.tablier['C1'], self.tablier['C2'], self.tablier['D1'], self.tablier['D2']) \
-               or self.isQuarto(self.tablier['A2'], self.tablier['A3'], self.tablier['B2'], self.tablier['B3']) \
-               or self.isQuarto(self.tablier['B2'], self.tablier['B3'], self.tablier['C2'], self.tablier['C3']) \
-               or self.isQuarto(self.tablier['C2'], self.tablier['C3'], self.tablier['D2'], self.tablier['D3']) \
-               or self.isQuarto(self.tablier['A3'], self.tablier['A4'], self.tablier['B3'], self.tablier['B4'])\
-               or self.isQuarto(self.tablier['B3'], self.tablier['B4'], self.tablier['C3'], self.tablier['C4'])\
-               or self.isQuarto(self.tablier['C3'], self.tablier['C4'], self.tablier['D3'], self.tablier['D4'])
+        return self.isAttrEnCommun(self.tablier['A1'], self.tablier['A2'], self.tablier['B1'], self.tablier['B2']) \
+               or self.isAttrEnCommun(self.tablier['B1'], self.tablier['B2'], self.tablier['C1'], self.tablier['C2'])\
+               or self.isAttrEnCommun(self.tablier['C1'], self.tablier['C2'], self.tablier['D1'], self.tablier['D2']) \
+               or self.isAttrEnCommun(self.tablier['A2'], self.tablier['A3'], self.tablier['B2'], self.tablier['B3']) \
+               or self.isAttrEnCommun(self.tablier['B2'], self.tablier['B3'], self.tablier['C2'], self.tablier['C3']) \
+               or self.isAttrEnCommun(self.tablier['C2'], self.tablier['C3'], self.tablier['D2'], self.tablier['D3']) \
+               or self.isAttrEnCommun(self.tablier['A3'], self.tablier['A4'], self.tablier['B3'], self.tablier['B4'])\
+               or self.isAttrEnCommun(self.tablier['B3'], self.tablier['B4'], self.tablier['C3'], self.tablier['C4'])\
+               or self.isAttrEnCommun(self.tablier['C3'], self.tablier['C4'], self.tablier['D3'], self.tablier['D4'])
 
+    def isQuarto(self):
+        if self.isDiagoQuarto() or \
+                self.isLigneQuarto() or \
+                self.isColonneQuarto() or \
+                self.isCarreQuarto():
+            return True
 

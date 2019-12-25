@@ -211,10 +211,7 @@ class Quarto():
         :return:
         """
         # on appelle les fonctions seulement au bout de 4 tours
-        if self.Tablier.isDiagoQuarto() or \
-                self.Tablier.isLigneQuarto() or \
-                self.Tablier.isColonneQuarto() or \
-                self.Tablier.isCarreQuarto():
+        if self.Tablier.isQuarto():
             self.victoire = True
             self.aQuiLeTour['text'] = ""
             self.win['text'] = "QUARTO !!! " + self.Tour.auTourDe()[0] + " à gagné la partie"
