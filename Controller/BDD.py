@@ -40,6 +40,25 @@ def create_joueur(conn, user):
     conn.commit()
     return cur.lastrowid
 
+def select_joueur(conn, pseudo):
+    """
+    selection d'un joueur de la bdd si existe déjà
+    :param conn:  Connection to the SQLite database
+    :param id: id of the task
+    :return:
+    """
+    try:
+        sql = 'SELECT * FROM joueur WHERE pseudo=?'
+        cur = conn.cursor()
+        cur.execute(sql, (pseudo,))
+        joueur = cur.fetchall()[0] # ex : (13, 'Olove', 0, 0)
+        conn.commit()
+        return joueur
+    except:
+        conn.commit()
+        return False # code erreur si le joueur n'existe pas
+    # except Error as e:
+    #     print(e)
 
 def update_partie_joueur(conn, task):
     """

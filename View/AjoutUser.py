@@ -15,6 +15,7 @@ while choix != 'q':
                     "5/ Ajouter victoire \n"
                     "6/ Ajouter défaite \n"
                     "7/ Tout supprimer \n"
+                    "8/ Selectionner un joueur \n"
                   "\nChoix : \nq pour quitter  ")
 
     if choix == '1':
@@ -49,4 +50,8 @@ while choix != 'q':
         if choix == 'y':
             with conn:
                 delete_all(conn)
+    elif choix == '8':
+        pseudo = input("\nEntrer un pseudo : ")
+        with conn:
+            print(select_joueur(conn, pseudo))
 

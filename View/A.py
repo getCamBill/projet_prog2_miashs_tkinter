@@ -33,12 +33,14 @@ class Quarto():
         self.o2 = ttk.Frame(self.n)  # Ajout de l'onglet 2
         self.o2.pack()
 
+        self.o3 = ttk.Frame(self.n)  # Ajout de l'onglet 2
+        self.o3.pack()
+
         self.n.add(self.o1, text='Quarto')  # Nom de l'onglet 1
         self.n.add(self.o2, text='Joueurs')  # Nom de l'onglet 2
+        self.n.add(self.o3, text='Selectionner')  # Nom de l'onglet 2
 
         AddUser(self.o2)
-        # Button(o1, text='Quitter', command=self.fenetre.destroy).pack(padx=100, pady=100)
-        # Button(o2, text='En attente', command=None).pack(padx=100, pady=100)
         # --------------------------------------------------------------------------
         self.database: str = 'C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db'
         self.conn = create_connection(self.database)
@@ -46,8 +48,8 @@ class Quarto():
         self.Tablier: Tablier = Tablier()
         self.Etat: Etat = Etat(self.Tablier)
         self.Pioche: Pioche = Pioche()
-        self.Joueur1: Joueur = joueur1
-        self.Joueur2: Joueur = joueur2
+        # self.Joueur1: Joueur = joueur1
+        # self.Joueur2: Joueur = joueur2
         self.Tour: Tour = Tour()
         self.aborted: bool = False
         """create the main window and pack the widgets"""
@@ -62,12 +64,54 @@ class Quarto():
         self.frameCentre = Frame(self.o1, width=200, height=400)
         self.frameCentre.grid(row=0, column=1, padx=10, pady=5)
         # --------------------------------------------------------------------------
+
+
+
+        # --------------------------------------------------------------------------
+        self.fr1 = Frame(self.o3)
+        self.fr1.grid(row=0, column=0)
+        self.fr2 = Frame(self.o3)
+        self.fr2.grid(row=0, column=1)
+        # --------------------------------------------------------------------------
+        self.user_name = Entry(self.fr1, width=30)
+        self.user_name.grid(row=0, column=1, padx=20)
+        self.user_name_label = Label(self.fr1, text="Joueur 1")
+        self.user_name_label.grid(row=0, column=0)
+
+        self.user_name2 = Entry(self.fr1, width=30)
+        self.user_name2.grid(row=1, column=1, padx=20)
+        self.user_name_label2 = Label(self.fr1, text="Joueur 2")
+        self.user_name_label2.grid(row=1, column=0)
+        # --------------------------------------------------------------------------
+
+        self.submit_btn = Button(self.fr1, text="JOUER")
+        self.submit_btn['command'] = lambda user1=self.user_name.get(), user2=self.user_name2.get(): self.submit(user1, user2)
+        self.submit_btn.grid(row=2, column=1, padx=10, pady=10)
+
+        # --------------------------------------------------------------------------
         self.new_game()
+        self.n.select(2)
+        # -------------------------------------------------------------------------
         # --------------------------------------------------------------------------
         self.fenetre.mainloop()
         # --------------------------------------------------------------------------
-        # -------------------------------------------------------------------------
 
+# -------------------------------------------------------------------------
+    def submit(self, user1, user2):
+        # print("1")
+        # if not (user1 == "" and user2 == ""):
+        print("2")
+        if not select_joueur(self.conn, user1) or not select_joueur(self.conn, user2):
+            print("4")
+            self.popup(3)
+            self.n.select(1)
+        else:
+            print("3")
+            self.Joueur1: Joueur = user1
+            self.Joueur2: Joueur = user2
+            self.n.select(0)
+
+# -------------------------------------------------------------------------
     def createPlateau(self):
         photo = PhotoImage(file=r"Z.png")  # C:Users\camil\PycharmProjects\UI\
         photoimage = photo.subsample(1, 1)
@@ -83,11 +127,9 @@ class Quarto():
                 bt.grid(row=ligne, column=colonne)
                 # bt.pack()
                 i += 1
-
 # --------------------------------------------------------------------------
 
 # --------------------------------------------------------------------------
-
     def createPioche(self):
         idPieces = list(self.Pioche.listPieceDispo())
         taille = len(self.Pioche.listPieceDispo())
@@ -106,21 +148,18 @@ class Quarto():
                 # button.pack(side="bottom", fill="both", expand="yes")
                 i += 1
 # --------------------------------------------------------------------------
-
     def choixPiece(self, idxPiece, binst):
         print(idxPiece)
         self.pieceStby['text'] = idxPiece
         self.Tablier.piecePourAdversaire(idxPiece, self.Joueur2)
         binst.destroy()
-
 # ----------------------------------------------------------------------------
     def show(self):
         print("Tablier : ")
         print(self.Tablier.tablier)
         print("Pioche : ")
         print(self.Pioche.Pioche)
-
-# ----------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
     def choisirCase(self, binst, idxCase):
         print(idxCase)
         self.idxCase = idxCase
@@ -143,18 +182,26 @@ class Quarto():
             self.popup(2)
 # --------------------------------------------------------------------------
     def popup(self, code):
-        fInfos = Toplevel()  # Popup -> Toplevel()
+        self.fInfos = Toplevel()  # Popup -> Toplevel()
+        # ----------------------------------------------------
         if code == 1:
-            fInfos.title('Infos')
-            Button(fInfos, text='Ok je fais pas le teubé...', command=fInfos.destroy).pack(padx=10, pady=10)
+            self.fInfos.title('Infos')
+            Button(self.fInfos, text='Ok je fais pas le teubé...', command=self.fInfos.destroy).pack(padx=10, pady=10)
+        # ----------------------------------------------------
         elif code == 2:
-            fInfos.title('Infos')
-            Button(fInfos, text='Nouvelle partie', command=self.new_game).pack(padx=10, pady=10)
-            Button(fInfos, text='Quitter', command=self.fenetre.destroy).pack(padx=10, pady=10)
-
-        fInfos.transient(self.fenetre)  # Réduction popup impossible
-        fInfos.grab_set()  # Interaction avec fenetre jeu impossible
-        self.fenetre.wait_window(fInfos)  # Arrêt script principal
+            self.fInfos.title('Infos')
+            Button(self.fInfos, text='Nouvelle partie', command=self.new_game).pack(padx=10, pady=10)
+            Button(self.fInfos, text='Quitter', command=self.fenetre.destroy).pack(padx=10, pady=10)
+        # ----------------------------------------------------
+        elif code == 3:
+            self.fInfos.title('Infos')
+            Label(self.fInfos, text='Veuiller entrer les joueurs dans la BDD').pack(padx=10, pady=10)
+            Button(self.fInfos, text='OK', command=self.fInfos.destroy).pack(padx=10, pady=10)
+        # ----------------------------------------------------
+        # ----------------------------------------------------
+        self.fInfos.transient(self.fenetre)  # Réduction popup impossible
+        self.fInfos.grab_set()  # Interaction avec fenetre jeu impossible
+        self.fenetre.wait_window(self.fInfos)  # Arrêt script principal
 
 # --------------------------------------------------------------------------
 
@@ -162,15 +209,15 @@ class Quarto():
 
         # photo = PhotoImage(file=r"Z.png")
         self.pieceStby = Label(self.frameCentre, text='test')
-        # self.pieceStby.grid(row=1, column=1)
-        self.pieceStby.pack()
+        self.pieceStby.grid(row=4, column=0)
+        # self.pieceStby.pack()
         # --------------------------------------------------------------------------
         self.win = Label(self.frameCentre, text=' ... ')
         # self.pieceStby.grid(row=1, column=1)
-        self.win.pack()
+        self.win.grid(row=5, column=0)
         # --------------------------------------------------------------------------
         self.aQuiLeTour = Label(self.frameCentre, text='au tour de ...')
-        self.aQuiLeTour.pack()
+        self.aQuiLeTour.grid(row=6, column=0)
         # --------------------------------------------------------------------------
         self.createPioche()
         self.createPlateau()
@@ -186,6 +233,7 @@ class Quarto():
 # --------------------------------------------------------------------------
 # ==============================================================================
 if __name__ == '__main__':
+
     j1 = Joueur('Z')
     j2 = Joueur('Y')
     fenetre = Tk()
