@@ -48,8 +48,10 @@ class Quarto():
         self.Tablier: Tablier = Tablier()
         self.Etat: Etat = Etat(self.Tablier)
         self.Pioche: Pioche = Pioche()
-        # self.Joueur1: Joueur = joueur1
-        # self.Joueur2: Joueur = joueur2
+        self.Joueur1: Joueur = joueur1
+        self.Joueur2: Joueur = joueur2
+        # self.Joueur1: Joueur = None
+        # self.Joueur2: Joueur = None
         self.Tour: Tour = Tour()
         self.aborted: bool = False
         """create the main window and pack the widgets"""
@@ -83,33 +85,37 @@ class Quarto():
         self.user_name_label2 = Label(self.fr1, text="Joueur 2")
         self.user_name_label2.grid(row=1, column=0)
         # --------------------------------------------------------------------------
-
-        self.submit_btn = Button(self.fr1, text="JOUER")
-        self.submit_btn['command'] = lambda user1=self.user_name.get(), user2=self.user_name2.get(): self.submit(user1, user2)
-        self.submit_btn.grid(row=2, column=1, padx=10, pady=10)
-
         # --------------------------------------------------------------------------
-        self.new_game()
+
         self.n.select(2)
         # -------------------------------------------------------------------------
+        self.submit_btn = Button(self.fr1, text="JOUER")
+        self.submit_btn['command'] = lambda user1=self.user_name.get(), user2=self.user_name2.get(): self.submit()
+        self.submit_btn.grid(row=2, column=1, padx=10, pady=10)
+
+
         # --------------------------------------------------------------------------
         self.fenetre.mainloop()
         # --------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
-    def submit(self, user1, user2):
-        # print("1")
-        # if not (user1 == "" and user2 == ""):
-        print("2")
-        if not select_joueur(self.conn, user1) or not select_joueur(self.conn, user2):
-            print("4")
-            self.popup(3)
-            self.n.select(1)
-        else:
-            print("3")
-            self.Joueur1: Joueur = user1
-            self.Joueur2: Joueur = user2
+    def submit(self):
+        # listeJ = select_joueur_by_victory(self.conn)
+        user1 = self.user_name.get()
+        user2 = self.user_name2.get()
+        listeJ = [ele[1] for ele in select_joueur_by_victory(self.conn)]
+
+        if user1 in listeJ and user2 in listeJ:# si les deux joueurs sont dans la BDD on joue
+            self.Joueur1.pseudo = user1
+            self.Joueur2.pseudo = user2
+            self.new_game()
             self.n.select(0)
+        else: # si au moin un des deux joueur n'y est pas
+            # self.popup(3)
+            self.n.select(1)
+
+
+
 
 # -------------------------------------------------------------------------
     def createPlateau(self):
@@ -139,8 +145,8 @@ class Quarto():
         for ligne in range(4):
             for colonne in range(4):
         # for i, piece in enumerate(self.Pioche.listPieceDispo()):
-                image = Image.open(idPieces[i] + ".png")
-                photo = ImageTk.PhotoImage(image)
+        #         image = Image.open(idPieces[i] + ".png")
+        #         photo = ImageTk.PhotoImage(image)
                 button = Button(self.framePieces, text=idPieces[i], width=5, height=5)
                 # self.button['image'] = photo
                 button['command'] = lambda idx=idPieces[i], binst=button: self.choixPiece(idx, binst)
@@ -234,8 +240,8 @@ class Quarto():
 # ==============================================================================
 if __name__ == '__main__':
 
-    j1 = Joueur('Z')
-    j2 = Joueur('Y')
+    j1 = Joueur()
+    j2 = Joueur()
     fenetre = Tk()
     q = Quarto(fenetre, j1, j2)
     fenetre.mainloop()

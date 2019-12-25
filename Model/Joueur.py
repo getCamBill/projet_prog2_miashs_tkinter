@@ -3,7 +3,7 @@ from Controller.BDD import *
 
 class Joueur(object):
 
-    def __init__(self, pseudo: str):
+    def __init__(self, pseudo: str = ""):
 
         self.pseudo: str = pseudo
         self.jouer: bool = False
