@@ -192,6 +192,8 @@ class Quarto():
             self.victoire = True
             self.aQuiLeTour['text'] = ""
             self.win['text'] = "QUARTO !!! " + self.Tour.auTourDe()[0] + " à gagné la partie"
+            update_partie_joueur(self.conn, (1, 0, self.Tour.auTourDe()[0])) # on met à jour les données de chaque partie
+            update_partie_joueur(self.conn, (0, 1, self.Tour.auTourDe()[1]))
             self.mon_audio.play(-1)
             self.popup(2)
 # --------------------------------------------------------------------------
@@ -216,7 +218,6 @@ class Quarto():
         self.fInfos.transient(self.fenetre)  # Réduction popup impossible
         self.fInfos.grab_set()  # Interaction avec fenetre jeu impossible
         self.fenetre.wait_window(self.fInfos)  # Arrêt script principal
-
 # --------------------------------------------------------------------------
 
     def new_game(self):

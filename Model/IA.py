@@ -2,9 +2,9 @@
 Classe IA:
 Jouer contre l'ordi
 """
+from Model.Joueur import Joueur
 
-class IA(object):
 
-    def __init__(self):
-        pass
-    # still a mistery ...
+class IA(Joueur):
+
+    def 
