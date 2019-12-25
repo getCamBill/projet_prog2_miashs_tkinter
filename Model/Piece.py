@@ -1,6 +1,13 @@
 class Piece(object):
 
     def __init__(self,color: str = None, shape: str = None, size: str = None, dug: int = None):
+        """
+
+        :param color:
+        :param shape:
+        :param size:
+        :param dug:
+        """
 
         self.color: str = color
         self.shape: str = shape
@@ -8,4 +15,8 @@ class Piece(object):
         self.dug: int = dug
 
     def showCarac(self):
+        """
+
+        :return:
+        """
         return self.color, self.shape, self.size, self.dug

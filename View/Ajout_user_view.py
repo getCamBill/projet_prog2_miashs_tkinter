@@ -5,6 +5,10 @@ from PIL import *
 
 class AddUser():
     def __init__(self, onglet):
+        """
+
+        :param onglet:
+        """
 
         self.root = onglet
         # self.root.title("Liste des Joueurs")
@@ -24,8 +28,11 @@ class AddUser():
         self.user_name_label.grid(row=0, column=0)
         # --------------------------------------------------------------------------
 
-        self.submit_btn = Button(self.fr1, text="Ajouter pseudo", command=self.submit)
-        self.submit_btn.grid(row=2, column=1, padx=10, pady=10)
+        self.submit_btn = Button(self.fr1, text="Ajouter", command=self.submit)
+        self.submit_btn.grid(row=2, column=1, padx=5, pady=10)
+
+        self.submit_btn = Button(self.fr1, text="Supprimer", command=self.delete)
+        self.submit_btn.grid(row=2, column=0, padx=5, pady=10)
         # --------------------------------------------------------------------------
         self.scrollbar = Scrollbar(self.fr2)
         self.scrollbar.pack(side=RIGHT, fill=Y)
@@ -35,25 +42,43 @@ class AddUser():
         self.scrollbar.config(command=self.listbox.yview)
 
         self.montrer()
-        # --------------------------------------------------------------------------
+# --------------------------------------------------------------------------
 
         # self.root.mainloop()
     def submit(self):
-        # clear champ texte
+        """
+
+        :return:
+        """
         if not self.user_name.get() == "":
             user = (self.user_name.get(), 0, 0)
             create_joueur(self.conn, user)
             self.user_name.delete(0, END)
             self.montrer()
+# --------------------------------------------------------------------------
+    def delete(self):
+        """
 
-    # --------------------------------------------------------------------------
+        :return:
+        """
+        if not self.user_name.get() == "":
+            user = self.user_name.get()
+            delete_joueur(self.conn, user)
+            self.user_name.delete(0, END)
+            self.montrer()
+# --------------------------------------------------------------------------
     def montrer(self):
+        """
+
+        :return:
+        """
         self.listbox.delete(0, END)
         listeJ = select_joueur_by_victory(self.conn)
         for i in listeJ:
-            info = "Pseudo :"+ i[1]+" Victoire : "+str(i[2])+" Défaite : "+str(i[3])
-            self.listbox.insert(END, info)
-    # --------------------------------------------------------------------------
+            if i[1] != "":
+                info = "Pseudo :"+ i[1]+" Victoire : "+str(i[2])+" Défaite : "+str(i[3])
+                self.listbox.insert(END, info)
+# --------------------------------------------------------------------------
 
 if __name__ == '__main__':
     fenetre = Tk()

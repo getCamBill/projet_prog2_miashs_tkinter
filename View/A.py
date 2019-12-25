@@ -19,6 +19,12 @@ HAUTEUR = 400
 class Quarto():
     # ----------------------------------------------------------------------------
     def __init__(self, fenetre, joueur1: Joueur = None, joueur2: Joueur = None):
+        """
+
+        :param fenetre:
+        :param joueur1:
+        :param joueur2:
+        """
         # --------------------------------------------------------------------------
         self.fenetre = fenetre
         self.fenetre.title("Quarto !! ")
@@ -100,31 +106,30 @@ class Quarto():
 
 # -------------------------------------------------------------------------
     def submit(self):
+        """
+
+        :return:
+        """
         # listeJ = select_joueur_by_victory(self.conn)
         user1 = self.user_name.get()
         user2 = self.user_name2.get()
         listeJ = [ele[1] for ele in select_joueur_by_victory(self.conn)]
 
-        if user1 in listeJ and user2 in listeJ:# si les deux joueurs sont dans la BDD on joue
+        if user1 != "" and user2 != "" and user1 in listeJ and user2 in listeJ:# si les deux joueurs sont dans la BDD on joue
             self.Joueur1.pseudo = user1
             self.Joueur2.pseudo = user2
             self.Tour: Tour = Tour(user1, user2)
-            # self.Tour.J1 = user1
-            # self.Tour.J2 = user2
             self.new_game()
             self.n.select(0)
         else: # si au moin un des deux joueur n'y est pas
             # self.popup(3)
             self.n.select(1)
-
-# ----------------------------------------------------------------------------
-    def show(self):
-        print("Tablier : ")
-        print(self.Tablier.tablier)
-        print("Pioche : ")
-        print(self.Pioche.Pioche)
     # -------------------------------------------------------------------------
     def createPlateau(self):
+        """
+
+        :return:
+        """
         photo = PhotoImage(file=r"Z.png")  # C:Users\camil\PycharmProjects\UI\
         photoimage = photo.subsample(1, 1)
         idCases = list(self.Tablier.tablier.keys())
@@ -143,6 +148,10 @@ class Quarto():
 
 # --------------------------------------------------------------------------
     def createPioche(self):
+        """
+
+        :return:
+        """
         idPieces = list(self.Pioche.listPieceDispo())
         taille = len(self.Pioche.listPieceDispo())
         # print(idPieces)
@@ -161,6 +170,12 @@ class Quarto():
                 i += 1
 # --------------------------------------------------------------------------
     def choixPiece(self, idxPiece, binst):
+        """
+
+        :param idxPiece:
+        :param binst:
+        :return:
+        """
         self.aQuiLeTour['text'] = str(self.Tour.auTourDe()[1] + " choisis la case")
         print(idxPiece)
         self.pieceStby['text'] = idxPiece
@@ -169,6 +184,12 @@ class Quarto():
         self.Tour.tour += 1
 # ---------------------------------------------------------------------------
     def choisirCase(self, binst, idxCase):
+        """
+
+        :param binst:
+        :param idxCase:
+        :return:
+        """
         # --------------------------------------------------------------------------
         self.aQuiLeTour['text'] = str(self.Tour.auTourDe()[0] + " choisis la pièce")
         self.aQuiLeTour.grid(row=6, column=0)
@@ -185,10 +206,15 @@ class Quarto():
 
 # --------------------------------------------------------------------------
     def vict(self):
+        """
+
+        :return:
+        """
         # on appelle les fonctions seulement au bout de 4 tours
         if self.Tablier.isDiagoQuarto() or \
                 self.Tablier.isLigneQuarto() or \
-                self.Tablier.isColonneQuarto():
+                self.Tablier.isColonneQuarto() or \
+                self.Tablier.isCarreQuarto():
             self.victoire = True
             self.aQuiLeTour['text'] = ""
             self.win['text'] = "QUARTO !!! " + self.Tour.auTourDe()[0] + " à gagné la partie"
@@ -198,6 +224,11 @@ class Quarto():
             self.popup(2)
 # --------------------------------------------------------------------------
     def popup(self, code):
+        """
+
+        :param code:
+        :return:
+        """
         self.fInfos = Toplevel()  # Popup -> Toplevel()
         # ----------------------------------------------------
         if code == 1:
@@ -221,6 +252,10 @@ class Quarto():
 # --------------------------------------------------------------------------
 
     def new_game(self):
+        """
+
+        :return:
+        """
         # photo = PhotoImage(file=r"Z.png")
         self.pieceStby = Label(self.frameCentre, text='test')
         self.pieceStby.grid(row=4, column=0)
@@ -233,7 +268,7 @@ class Quarto():
         self.cases: list = []
         self.idxCase = ''
         # --------------------------------------------------------------------------
-        self.aQuiLeTour = Label(self.frameCentre, text="Attente")
+        self.aQuiLeTour = Label(self.frameCentre, text=str(self.Tour.auTourDe()[0] + " choisis la pièce"))
         self.aQuiLeTour.grid(row=6, column=0)
         # --------------------------------------------------------------------------
         pygame.mixer.init()

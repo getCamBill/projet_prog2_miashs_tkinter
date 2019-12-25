@@ -3,6 +3,9 @@ from Model.Piece import Piece
 class Pioche(object):
 
     def __init__(self):
+        """
+
+        """
         self.Pioche = dict({})
         for color in ("M", "B"):
             for shape in ("R", "C"):
@@ -13,20 +16,37 @@ class Pioche(object):
                         self.Pioche[self.idPiece] = piece
 
     def showPieces(self):
+        """
+
+        :return:
+        """
         print("Pièces disponibles : ")
         [print("Id : ",ele) for ele in self.Pioche.keys()]
 
     def listPieceDispo(self):
+        """
+
+        :return:
+        """
         return [ele for ele in self.Pioche.keys()]
     def __getitem__(self, item):
+        """
+
+        :param item:
+        :return:
+        """
         try:
             return self.Pioche[item]
         except:
             print("La pièce est déjà posée ! ")
 
-
-
     def __setitem__(self, key, value):
+        """
+
+        :param key:
+        :param value:
+        :return:
+        """
         del self.Pioche[key]
 
 if __name__ == "__main__":

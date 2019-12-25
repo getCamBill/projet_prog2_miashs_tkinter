@@ -11,6 +11,11 @@ from Controller.BDD import *
 class Game(object):
 
     def __init__(self, joueur1: Joueur = None, joueur2: Joueur = None):
+        """
+
+        :param joueur1:
+        :param joueur2:
+        """
 
         self.database: str = 'C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db'
         self.conn = create_connection(self.database)
@@ -24,6 +29,11 @@ class Game(object):
         self.aborted: bool = False
 
     def isAborted(self, input):
+        """
+
+        :param input:
+        :return:
+        """
         if input == "quitter" or "q" or "QUITTER" or "Q":
             self.aborted = True
             print("Partie ABORTED !!")
@@ -31,6 +41,10 @@ class Game(object):
             return input
 
     def showRules(self):
+        """
+
+        :return:
+        """
         print("--------------------------------------------------")
         print("-------BIENVENUE DANS LE JEU DU QUARTO !!!--------")
         print("--------------------------------------------------")
@@ -66,6 +80,10 @@ class Game(object):
         - Egalité: toutes les pièces ont été posées sans vainqueur.")
 
     def actionPiece(self):
+        """
+
+        :return:
+        """
 
         print("Le joueur 1 choisit une pièce pour le joueur 2, dans la liste suivante : \n")
         self.Pioche.showPieces()
@@ -74,6 +92,10 @@ class Game(object):
         self.Tablier.piecePourAdversaire(piece, self.Joueur2)
 
     def actionCase(self):
+        """
+
+        :return:
+        """
         print("Le joueur 2 indique la case : ")
         self.Tablier.showTablier()
 
@@ -81,6 +103,10 @@ class Game(object):
         self.Tablier.poserPiece(self.Joueur2, case, self.Pioche)
 
     def start(self):
+        """
+
+        :return:
+        """
         # self.showRules()
         self.aborted = False
         self.conn = create_connection(self.database)
@@ -133,6 +159,10 @@ class Game(object):
 
                     self.aborted = True
     def show(self):
+        """
+
+        :return:
+        """
         select_joueur_by_victory(self.conn)
         print("---------")
 
