@@ -52,7 +52,7 @@ class Quarto():
         self.Joueur2: Joueur = joueur2
         # self.Joueur1: Joueur = None
         # self.Joueur2: Joueur = None
-        self.Tour: Tour = Tour()
+        # self.Tour: Tour = Tour(self.Joueur1, self.Joueur1)
         self.aborted: bool = False
         """create the main window and pack the widgets"""
 
@@ -108,16 +108,22 @@ class Quarto():
         if user1 in listeJ and user2 in listeJ:# si les deux joueurs sont dans la BDD on joue
             self.Joueur1.pseudo = user1
             self.Joueur2.pseudo = user2
+            self.Tour: Tour = Tour(user1, user2)
+            # self.Tour.J1 = user1
+            # self.Tour.J2 = user2
             self.new_game()
             self.n.select(0)
         else: # si au moin un des deux joueur n'y est pas
             # self.popup(3)
             self.n.select(1)
 
-
-
-
-# -------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+    def show(self):
+        print("Tablier : ")
+        print(self.Tablier.tablier)
+        print("Pioche : ")
+        print(self.Pioche.Pioche)
+    # -------------------------------------------------------------------------
     def createPlateau(self):
         photo = PhotoImage(file=r"Z.png")  # C:Users\camil\PycharmProjects\UI\
         photoimage = photo.subsample(1, 1)
@@ -155,27 +161,28 @@ class Quarto():
                 i += 1
 # --------------------------------------------------------------------------
     def choixPiece(self, idxPiece, binst):
+        self.aQuiLeTour['text'] = str(self.Tour.auTourDe()[1] + " choisis la case")
         print(idxPiece)
         self.pieceStby['text'] = idxPiece
         self.Tablier.piecePourAdversaire(idxPiece, self.Joueur2)
         binst.destroy()
-# ----------------------------------------------------------------------------
-    def show(self):
-        print("Tablier : ")
-        print(self.Tablier.tablier)
-        print("Pioche : ")
-        print(self.Pioche.Pioche)
+        self.Tour.tour += 1
 # ---------------------------------------------------------------------------
     def choisirCase(self, binst, idxCase):
+        # --------------------------------------------------------------------------
+        self.aQuiLeTour['text'] = str(self.Tour.auTourDe()[0] + " choisis la pièce")
+        self.aQuiLeTour.grid(row=6, column=0)
+
         print(idxCase)
         self.idxCase = idxCase
         binst['text'] = self.pieceStby['text']
+        binst['bg'] = 'red'
         if self.Tablier.poserPiece(self.Joueur2, idxCase, self.Pioche) == 1:
             self.popup(1)
 
         if self.Tour.tour > 2:
             self.vict()
-        self.Tour.tour += 1
+
 # --------------------------------------------------------------------------
     def vict(self):
         # on appelle les fonctions seulement au bout de 4 tours
@@ -183,7 +190,8 @@ class Quarto():
                 self.Tablier.isLigneQuarto() or \
                 self.Tablier.isColonneQuarto():
             self.victoire = True
-            self.win['text'] = "QUARTO !!! "
+            self.aQuiLeTour['text'] = ""
+            self.win['text'] = "QUARTO !!! " + self.Tour.auTourDe()[0] + " à gagné la partie"
             self.mon_audio.play(-1)
             self.popup(2)
 # --------------------------------------------------------------------------
@@ -212,23 +220,20 @@ class Quarto():
 # --------------------------------------------------------------------------
 
     def new_game(self):
-
         # photo = PhotoImage(file=r"Z.png")
         self.pieceStby = Label(self.frameCentre, text='test')
         self.pieceStby.grid(row=4, column=0)
-        # self.pieceStby.pack()
         # --------------------------------------------------------------------------
         self.win = Label(self.frameCentre, text=' ... ')
-        # self.pieceStby.grid(row=1, column=1)
         self.win.grid(row=5, column=0)
-        # --------------------------------------------------------------------------
-        self.aQuiLeTour = Label(self.frameCentre, text='au tour de ...')
-        self.aQuiLeTour.grid(row=6, column=0)
         # --------------------------------------------------------------------------
         self.createPioche()
         self.createPlateau()
         self.cases: list = []
         self.idxCase = ''
+        # --------------------------------------------------------------------------
+        self.aQuiLeTour = Label(self.frameCentre, text="Attente")
+        self.aQuiLeTour.grid(row=6, column=0)
         # --------------------------------------------------------------------------
         pygame.mixer.init()
         self.mon_audio = pygame.mixer.Sound("clap.wav")
