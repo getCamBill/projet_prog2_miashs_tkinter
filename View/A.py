@@ -80,15 +80,20 @@ class Quarto():
         self.fr2 = Frame(self.o3)
         self.fr2.grid(row=0, column=1)
         # --------------------------------------------------------------------------
+        self.user_name_label = Label(self.fr1, text="Entrer les pseudos des deux Joueurs pour commencer \nSi un "
+                                                    "joueur n'est pas dans la base de donnée, il faudra le créer.", bg = "grey", borderwidth = 2, relief = "groove")
+
+        self.user_name_label.grid(row=0, column=1)
+
         self.user_name = Entry(self.fr1, width=30)
-        self.user_name.grid(row=0, column=1, padx=20)
+        self.user_name.grid(row=1, column=1, padx=20)
         self.user_name_label = Label(self.fr1, text="Joueur 1")
-        self.user_name_label.grid(row=0, column=0)
+        self.user_name_label.grid(row=1, column=0)
 
         self.user_name2 = Entry(self.fr1, width=30)
-        self.user_name2.grid(row=1, column=1, padx=20)
+        self.user_name2.grid(row=2, column=1, padx=20)
         self.user_name_label2 = Label(self.fr1, text="Joueur 2")
-        self.user_name_label2.grid(row=1, column=0)
+        self.user_name_label2.grid(row=2, column=0)
         # --------------------------------------------------------------------------
         # --------------------------------------------------------------------------
 
@@ -96,7 +101,7 @@ class Quarto():
         # -------------------------------------------------------------------------
         self.submit_btn = Button(self.fr1, text="JOUER")
         self.submit_btn['command'] = lambda user1=self.user_name.get(), user2=self.user_name2.get(): self.submit()
-        self.submit_btn.grid(row=2, column=1, padx=10, pady=10)
+        self.submit_btn.grid(row=3, column=1, padx=10, pady=10)
 
 
         # --------------------------------------------------------------------------
@@ -188,9 +193,9 @@ class Quarto():
         binst.destroy()
         self.buttonListe.remove(binst)
         self.Tour.tour += 1
-        if self.ia:
-            if self.Tour.auTourDe()[0] == 'IA':
-                self.choisirCase(self.buttonListe)
+        # if self.ia:
+        #     if self.Tour.auTourDe()[0] == 'IA':
+        #         self.choisirCase(self.buttonListe)
 # ---------------------------------------------------------------------------
     def choisirCase(self, binst, idxCase):
         """
@@ -243,7 +248,7 @@ class Quarto():
         # ----------------------------------------------------
         elif code == 2:
             self.fInfos.title('Infos')
-            Button(self.fInfos, text='Nouvelle partie', command=self.new_game).pack(padx=10, pady=10)
+            # Button(self.fInfos, text='Nouvelle partie', command=self.new_game).pack(padx=10, pady=10)
             Button(self.fInfos, text='Quitter', command=self.fenetre.destroy).pack(padx=10, pady=10)
         # ----------------------------------------------------
         elif code == 3:

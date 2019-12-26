@@ -21,11 +21,14 @@ class AddUser():
         self.fr2 = Frame(self.root)
         self.fr2.grid(row=0, column=1)
         # --------------------------------------------------------------------------
+        self.user_name_label = Label(self.fr1, bg="grey",text="Ici, entrer un pseudo pour l'enregistrer \ndans la bdd ou le supprimer", borderwidth=2, relief="groove")
+        self.user_name_label.grid(row=0, column=0)
+
         self.user_name = Entry(self.fr1, width=30)
-        self.user_name.grid(row=0, column=1, padx=20)
+        self.user_name.grid(row=1, column=1, padx=20)
 
         self.user_name_label = Label(self.fr1, text="Pseudo")
-        self.user_name_label.grid(row=0, column=0)
+        self.user_name_label.grid(row=1, column=0)
         # --------------------------------------------------------------------------
 
         self.submit_btn = Button(self.fr1, text="Ajouter", command=self.submit)
