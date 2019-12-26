@@ -6,6 +6,7 @@ from Model.Pioche import Pioche
 from Model.Joueur import Joueur
 from Model.Etat import Etat
 from Model.Tour import Tour
+from Model.IA import IA_random
 from Controller.BDD import *
 from functools import partial
 from threading import Timer
@@ -56,10 +57,8 @@ class Quarto():
         self.Pioche: Pioche = Pioche()
         self.Joueur1: Joueur = joueur1
         self.Joueur2: Joueur = joueur2
-        # self.Joueur1: Joueur = None
-        # self.Joueur2: Joueur = None
-        # self.Tour: Tour = Tour(self.Joueur1, self.Joueur1)
         self.aborted: bool = False
+        self.ia: bool = False
         """create the main window and pack the widgets"""
 
         # --------------------------------------------------------------------------
@@ -73,7 +72,7 @@ class Quarto():
         self.frameCentre.grid(row=0, column=1, padx=10, pady=5)
         # --------------------------------------------------------------------------
 
-
+        self.buttonListe = []
 
         # --------------------------------------------------------------------------
         self.fr1 = Frame(self.o3)
@@ -115,15 +114,20 @@ class Quarto():
         user2 = self.user_name2.get()
         listeJ = [ele[1] for ele in select_joueur_by_victory(self.conn)]
 
+
         if user1 != "" and user2 != "" and user1 in listeJ and user2 in listeJ:# si les deux joueurs sont dans la BDD on joue
             self.Joueur1.pseudo = user1
             self.Joueur2.pseudo = user2
             self.Tour: Tour = Tour(user1, user2)
+            if user1 == 'IA' or user2 == 'IA':
+                self.IA = IA_random(self.Tablier, self.Pioche, self.Tour)
+                self.ia = True
             self.new_game()
             self.n.select(0)
         else: # si au moin un des deux joueur n'y est pas
             # self.popup(3)
             self.n.select(1)
+
     # -------------------------------------------------------------------------
     def createPlateau(self):
         """
@@ -163,6 +167,7 @@ class Quarto():
         #         image = Image.open(idPieces[i] + ".png")
         #         photo = ImageTk.PhotoImage(image)
                 button = Button(self.framePieces, text=idPieces[i], width=5, height=5)
+                self.buttonListe.append(button)
                 # self.button['image'] = photo
                 button['command'] = lambda idx=idPieces[i], binst=button: self.choixPiece(idx, binst)
                 button.grid(row=ligne, column=colonne)
@@ -181,7 +186,11 @@ class Quarto():
         self.pieceStby['text'] = idxPiece
         self.Tablier.piecePourAdversaire(idxPiece, self.Joueur2)
         binst.destroy()
+        self.buttonListe.remove(binst)
         self.Tour.tour += 1
+        if self.ia:
+            if self.Tour.auTourDe()[0] == 'IA':
+                self.choisirCase(self.buttonListe)
 # ---------------------------------------------------------------------------
     def choisirCase(self, binst, idxCase):
         """
@@ -198,9 +207,9 @@ class Quarto():
         self.idxCase = idxCase
         binst['text'] = self.pieceStby['text']
         binst['bg'] = 'red'
+
         if self.Tablier.poserPiece(self.Joueur2, idxCase, self.Pioche) == 1:
             self.popup(1)
-
         if self.Tour.tour > 2:
             self.vict()
 

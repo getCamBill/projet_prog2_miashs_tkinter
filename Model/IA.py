@@ -2,11 +2,14 @@
 Classe IA:
 Jouer contre l'ordi
 """
+
 from Model.Tablier import Pioche, Tablier
-from Model.Pioche import Piece
+from Model.Pioche import Pioche
 from Model.Tour import Tour
+from Model.Joueur import Joueur
+import random
 # ==============================================================================
-class IA(object):
+class IA_random(object):
 
     def __init__(self, Tablier: Tablier = None, Pioche: Pioche = None, Tour: Tour = None):
         self.tablier = Tablier
@@ -32,29 +35,28 @@ class IA(object):
     def nextCoupUnWin(self):
         pass
 # --------------------------------------------------------------------------
-    def bestPlace(self):
+    def bestPlace(self, listeCase):
         """
         On regarde la meilleurs case pour poser notre piece
         :return:
         """
-        if self.tour == 0:
-            # on met la piece en random
-            pass
-        else:
-            # on cherhec les position avec des pieces avec le plus d'attre e commun
-            pass
+        case = random.choice(listeCase)
+
+        return case
 
 # --------------------------------------------------------------------------
-    def worstPiece(self):
+    def worstPiece(self, listePiece):
         """
         On donne a l'adversaire la piece avec le moins d'attribut en commun
         sur les places possibles
         :return:
         """
-        pass
+        piece = random.choice(listePiece)
+
+        return piece
 # --------------------------------------------------------------------------
     def piecesVoisine(self, case):
-
+        pass
 # --------------------------------------------------------------------------
 
 # --------------------------------------------------------------------------
@@ -64,4 +66,9 @@ class IA(object):
 if __name__ == '__main__':
     tab = Tablier()
     pio = Pioche()
-    ia = IA(tab, pio)
+    j1 = Joueur('1')
+    j2 = Joueur('2')
+    t = Tour(j1, j2)
+    ia = IA_random(tab, pio, t)
+    print(ia.bestPlace())
+    print(ia.worstPiece())
