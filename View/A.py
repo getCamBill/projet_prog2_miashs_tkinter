@@ -12,6 +12,7 @@ from functools import partial
 from threading import Timer
 from View.Ajout_user_view import *
 import pygame
+
 from PIL import Image, ImageTk
 from random import randrange as rr, random
 LARGEUR = 500
@@ -28,19 +29,20 @@ class Quarto():
         """
         # --------------------------------------------------------------------------
         self.fenetre = fenetre
+
         self.fenetre.title("Quarto !! ")
 
 
         self.n = ttk.Notebook(self.fenetre)  # Création du système d'onglets
         self.n.pack()
 
-        self.o1 = ttk.Frame(self.n)  # Ajout de l'onglet 1
+        self.o1 = ttk.Frame(self.n, width=200, height=400)  # Ajout de l'onglet 1
         self.o1.pack()
 
-        self.o2 = ttk.Frame(self.n)  # Ajout de l'onglet 2
+        self.o2 = ttk.Frame(self.n, width=200, height=400)  # Ajout de l'onglet 2
         self.o2.pack()
 
-        self.o3 = ttk.Frame(self.n)  # Ajout de l'onglet 2
+        self.o3 = ttk.Frame(self.n, width=200, height=400)  # Ajout de l'onglet 2
         self.o3.pack()
 
         self.n.add(self.o1, text='Quarto')  # Nom de l'onglet 1
@@ -73,7 +75,7 @@ class Quarto():
         # --------------------------------------------------------------------------
 
         self.buttonListe = []
-
+        self.pieceEnJeux = ""
         # --------------------------------------------------------------------------
         self.fr1 = Frame(self.o3)
         self.fr1.grid(row=0, column=0)
@@ -140,15 +142,16 @@ class Quarto():
         :return:
         """
         photo = PhotoImage(file=r"Z.png")  # C:Users\camil\PycharmProjects\UI\
-        photoimage = photo.subsample(1, 1)
+        # photoimage = photo.subsample(1, 1)
         idCases = list(self.Tablier.tablier.keys())
-        # print(idCases)
         i: int = 0
         for ligne in range(4):
             for colonne in range(4):
-                # bt = Button(self.framePlateau, image=photoimage)
+
                 id = idCases[i]
-                bt = Button(self.framePlateau, text=id, width=5, height=5)
+                bt = Button(self.framePlateau, text=id, image=photo)
+                bt.image = photo
+                # bt = Button(self.framePlateau, text=id, width=5, height=5)
                 bt['command'] = lambda idx=idCases[i], binst=bt: self.choisirCase(binst, idx)
                 bt.grid(row=ligne, column=colonne)
                 # bt.pack()
@@ -169,9 +172,10 @@ class Quarto():
         for ligne in range(4):
             for colonne in range(4):
         # for i, piece in enumerate(self.Pioche.listPieceDispo()):
-        #         image = Image.open(idPieces[i] + ".png")
-        #         photo = ImageTk.PhotoImage(image)
-                button = Button(self.framePieces, text=idPieces[i], width=5, height=5)
+                image = Image.open(idPieces[i] + ".png")
+                photo = ImageTk.PhotoImage(image)
+                button = Button(self.framePieces, image=photo)
+                button.image = photo
                 self.buttonListe.append(button)
                 # self.button['image'] = photo
                 button['command'] = lambda idx=idPieces[i], binst=button: self.choixPiece(idx, binst)
@@ -186,13 +190,18 @@ class Quarto():
         :param binst:
         :return:
         """
-        self.aQuiLeTour['text'] = str(self.Tour.auTourDe()[1] + " choisis la case")
+        self.aQuiLeTour['text'] = str(self.Tour.auTourDe()[1] + " choisi la case")
         print(idxPiece)
-        self.pieceStby['text'] = idxPiece
+        self.pieceEnJeux = idxPiece
+        photo = PhotoImage(file=idxPiece+".png")
+        self.pieceStby.image = photo
+        self.pieceStby['image'] = photo
         self.Tablier.piecePourAdversaire(idxPiece, self.Joueur2)
         binst.destroy()
         self.buttonListe.remove(binst)
         self.Tour.tour += 1
+
+        self.wait_song.play(0,5000)
         # if self.ia:
         #     if self.Tour.auTourDe()[0] == 'IA':
         #         self.choisirCase(self.buttonListe)
@@ -205,18 +214,28 @@ class Quarto():
         :return:
         """
         # --------------------------------------------------------------------------
-        self.aQuiLeTour['text'] = str(self.Tour.auTourDe()[0] + " choisis la pièce")
+        self.aQuiLeTour['text'] = str(self.Tour.auTourDe()[0] + " choisi la pièce")
         self.aQuiLeTour.grid(row=6, column=0)
-
-        print(idxCase)
-        self.idxCase = idxCase
-        binst['text'] = self.pieceStby['text']
-        binst['bg'] = 'red'
-
+        self.wait_song.stop()
         if self.Tablier.poserPiece(self.Joueur2, idxCase, self.Pioche) == 1:
             self.popup(1)
+        else:
+            print(idxCase)
+            self.idxCase = idxCase
+            replace = self.pieceEnJeux
+            photo = PhotoImage(file=replace + "R.png")
+            binst.image = photo
+            binst['image'] = photo
+            self.move_song.play()
+            photo = PhotoImage(file="start.png")
+            photoimage = photo.subsample(3, 3)
+            self.pieceStby.image = photoimage
+            self.pieceStby['image'] = photoimage
+
         if self.Tour.tour > 2:
             self.vict()
+
+
 
 # --------------------------------------------------------------------------
     def vict(self):
@@ -225,14 +244,17 @@ class Quarto():
         :return:
         """
         # on appelle les fonctions seulement au bout de 4 tours
+
         if self.Tablier.isQuarto():
             self.victoire = True
             self.aQuiLeTour['text'] = ""
-            self.win['text'] = "QUARTO !!! " + self.Tour.auTourDe()[0] + " à gagné la partie"
+            self.win['text'] = "QUARTO !!! " + self.Tour.auTourDe()[0] + " a gagné la partie"
             update_partie_joueur(self.conn, (1, 0, self.Tour.auTourDe()[0])) # on met à jour les données de chaque partie
             update_partie_joueur(self.conn, (0, 1, self.Tour.auTourDe()[1]))
-            self.mon_audio.play(-1)
+            self.mon_audio.play()
             self.popup(2)
+        elif self.Pioche.listPieceDispo() == 0:
+            self.popup(4)
 # --------------------------------------------------------------------------
     def popup(self, code):
         """
@@ -256,6 +278,11 @@ class Quarto():
             Label(self.fInfos, text='Veuiller entrer les joueurs dans la BDD').pack(padx=10, pady=10)
             Button(self.fInfos, text='OK', command=self.fInfos.destroy).pack(padx=10, pady=10)
         # ----------------------------------------------------
+        elif code == 4:
+            self.fInfos.title('Fin')
+            Label(self.fInfos, text="Plus de pièces disponible donc fin de la partie !")
+            # Button(self.fInfos, text='Nouvelle partie', command=self.new_game).pack(padx=10, pady=10)
+            Button(self.fInfos, text='Quitter', command=self.fenetre.destroy).pack(padx=10, pady=10)
         # ----------------------------------------------------
         self.fInfos.transient(self.fenetre)  # Réduction popup impossible
         self.fInfos.grab_set()  # Interaction avec fenetre jeu impossible
@@ -267,8 +294,10 @@ class Quarto():
 
         :return:
         """
-        # photo = PhotoImage(file=r"Z.png")
-        self.pieceStby = Label(self.frameCentre, text='test')
+        photo = PhotoImage(file=r"start.png")
+        photoimage = photo.subsample(3, 3)
+        self.pieceStby = Label(self.frameCentre, image=photoimage)
+        self.pieceStby.image = photoimage
         self.pieceStby.grid(row=4, column=0)
         # --------------------------------------------------------------------------
         self.win = Label(self.frameCentre, text=' ... ')
@@ -284,6 +313,8 @@ class Quarto():
         # --------------------------------------------------------------------------
         pygame.mixer.init()
         self.mon_audio = pygame.mixer.Sound("clap.wav")
+        self.move_song = pygame.mixer.Sound("351518__mh2o__chess-move-on-alabaster.wav")
+        self.wait_song = pygame.mixer.Sound("0218.wav")
         # --------------------------------------------------------------------------
         self.mon_audio.stop()
 # --------------------------------------------------------------------------
