@@ -133,8 +133,9 @@ def select_joueur_by_victory(conn):
 
 
 def first():
-    database: str = "C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db"
-
+    # database: str = "C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db"
+    filename = os.path.relpath('..\\Controller\\UserDatabase.db')
+    database: str = filename
     sql_create_projects_table = """ CREATE TABLE IF NOT EXISTS joueur (
                                                 id integer PRIMARY KEY,
                                                 pseudo text NOT NULL,

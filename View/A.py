@@ -1,4 +1,5 @@
 # ==============================================================================
+import os
 from tkinter import *
 from tkinter import ttk
 from Model.Tablier import Tablier
@@ -29,7 +30,8 @@ class Quarto():
         """
         # --------------------------------------------------------------------------
         self.fenetre = fenetre
-
+        self.fenetre.maxsize(width=1100, height=500)
+        self.fenetre.minsize(width=1100, height=500)
         self.fenetre.title("Quarto !! ")
 
 
@@ -51,8 +53,18 @@ class Quarto():
 
         AddUser(self.o2)
         # --------------------------------------------------------------------------
-        self.database: str = 'C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db'
+        filename = os.path.relpath('..\\Controller\\UserDatabase.db')
+        # self.database: str = 'C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db'
+        self.database: str = filename
         self.conn = create_connection(self.database)
+
+        # self.imageDir1 = os.path.relpath('\\Classique\\')
+        self.imageDir1 = 'Classique\\'
+        self.imageDir2 = '2D\\'
+        self.imageDir3 = 'Abstrait\\'
+        # self.sonDir = os.path.relpath('\\Sons\\')
+        self.sonDir = 'Sons\\'
+        print(self.imageDir1)
         # --------------------------------------------------------------------------
         self.Tablier: Tablier = Tablier()
         self.Etat: Etat = Etat(self.Tablier)
@@ -141,7 +153,7 @@ class Quarto():
 
         :return:
         """
-        photo = PhotoImage(file=r"Z.png")  # C:Users\camil\PycharmProjects\UI\
+        photo = PhotoImage(file=self.imageDir1+"Z.png")  # C:Users\camil\PycharmProjects\UI\
         # photoimage = photo.subsample(1, 1)
         idCases = list(self.Tablier.tablier.keys())
         i: int = 0
@@ -172,7 +184,7 @@ class Quarto():
         for ligne in range(4):
             for colonne in range(4):
         # for i, piece in enumerate(self.Pioche.listPieceDispo()):
-                image = Image.open(idPieces[i] + ".png")
+                image = Image.open(self.imageDir1+idPieces[i] + ".png")
                 photo = ImageTk.PhotoImage(image)
                 button = Button(self.framePieces, image=photo)
                 button.image = photo
@@ -193,7 +205,7 @@ class Quarto():
         self.aQuiLeTour['text'] = str(self.Tour.auTourDe()[1] + " choisi la case")
         print(idxPiece)
         self.pieceEnJeux = idxPiece
-        photo = PhotoImage(file=idxPiece+".png")
+        photo = PhotoImage(file=self.imageDir1+idxPiece+".png")
         self.pieceStby.image = photo
         self.pieceStby['image'] = photo
         self.Tablier.piecePourAdversaire(idxPiece, self.Joueur2)
@@ -223,11 +235,11 @@ class Quarto():
             print(idxCase)
             self.idxCase = idxCase
             replace = self.pieceEnJeux
-            photo = PhotoImage(file=replace + "R.png")
+            photo = PhotoImage(file=self.imageDir1+replace + "R.png")
             binst.image = photo
             binst['image'] = photo
             self.move_song.play()
-            photo = PhotoImage(file="start.png")
+            photo = PhotoImage(file=self.imageDir1+"start.png")
             photoimage = photo.subsample(3, 3)
             self.pieceStby.image = photoimage
             self.pieceStby['image'] = photoimage
@@ -263,6 +275,7 @@ class Quarto():
         :return:
         """
         self.fInfos = Toplevel()  # Popup -> Toplevel()
+        # self.fInfos.
         # ----------------------------------------------------
         if code == 1:
             self.fInfos.title('Infos')
@@ -294,7 +307,7 @@ class Quarto():
 
         :return:
         """
-        photo = PhotoImage(file=r"start.png")
+        photo = PhotoImage(file=self.imageDir1+"start.png")
         photoimage = photo.subsample(3, 3)
         self.pieceStby = Label(self.frameCentre, image=photoimage)
         self.pieceStby.image = photoimage
@@ -312,9 +325,9 @@ class Quarto():
         self.aQuiLeTour.grid(row=6, column=0)
         # --------------------------------------------------------------------------
         pygame.mixer.init()
-        self.mon_audio = pygame.mixer.Sound("clap.wav")
-        self.move_song = pygame.mixer.Sound("351518__mh2o__chess-move-on-alabaster.wav")
-        self.wait_song = pygame.mixer.Sound("0218.wav")
+        self.mon_audio = pygame.mixer.Sound(self.sonDir+"clap.wav")
+        self.move_song = pygame.mixer.Sound(self.sonDir+"351518__mh2o__chess-move-on-alabaster.wav")
+        self.wait_song = pygame.mixer.Sound(self.sonDir+"0218.wav")
         # --------------------------------------------------------------------------
         self.mon_audio.stop()
 # --------------------------------------------------------------------------

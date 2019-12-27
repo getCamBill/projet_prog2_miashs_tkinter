@@ -92,7 +92,7 @@ if __name__ == '__main__':
     n.pack()
     o1 = ttk.Frame(n)  # Ajout de l'onglet 1
     o1.pack()
-    n.add(o1, text='Quarto')  # Nom de l'onglet 1
+    # n.add(o1, text='Quarto')  # Nom de l'onglet 1
 
     o1 = Tk()
     a = AddUser(o1)
