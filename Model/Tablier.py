@@ -166,3 +166,8 @@ class Tablier():
                     self.isColonneQuarto() or \
                     self.isCarreQuarto():
                 return True
+
+    def showTablier(self):
+        for ele in self.tablier.items():
+            if ele[1] == None:  # si la case est dispo on l'affiche
+                print(ele[0])

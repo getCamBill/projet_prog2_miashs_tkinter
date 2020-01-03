@@ -17,7 +17,8 @@ class Game(object):
         :param joueur2:
         """
 
-        self.database: str = 'C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db'
+        filename = os.path.relpath('..\\Controller\\UserDatabase.db')
+        self.database: str = filename
         self.conn = create_connection(self.database)
 
         self.Etat: Etat = Etat()
@@ -25,7 +26,7 @@ class Game(object):
         self.Pioche: Pioche = Pioche()
         self.Joueur1: Joueur = joueur1
         self.Joueur2: Joueur = joueur2
-        self.Tour: Tour = Tour()
+        self.Tour: Tour = Tour(self.Joueur1.pseudo, self.Joueur2.pseudo)
         self.aborted: bool = False
 
     def showRules(self):
@@ -112,13 +113,15 @@ class Game(object):
                     print("{0} à gagné face à {1}".format(joueur, donneur))
 
                     if self.Joueur1.jouer:
+                        pass
                         # update_partie_joueur(self.conn, (1, 0, self.Joueur1.pseudo))
                         # update_partie_joueur(self.conn, (0, 1, self.Joueur2.pseudo))
-                        self.Joueur1.setInfoJoueur(1, 0)
-                        self.Joueur2.setInfoJoueur(0, 1)
+                        # self.Joueur1.setInfoJoueur(1, 0)
+                        # self.Joueur2.setInfoJoueur(0, 1)
                     if self.Joueur2.jouer:
-                        self.Joueur2.setInfoJoueur(1, 0)
-                        self.Joueur1.setInfoJoueur(0, 1)
+                        pass
+                        # self.Joueur2.setInfoJoueur(1, 0)
+                        # self.Joueur1.setInfoJoueur(0, 1)
                         # update_partie_joueur(self.conn, (1, 0, self.Joueur2.pseudo))
                         # update_partie_joueur(self.conn, (0, 1, self.Joueur1.pseudo))
 

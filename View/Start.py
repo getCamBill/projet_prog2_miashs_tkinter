@@ -38,8 +38,8 @@ class Quarto():
         """
         # --------------------------------------------------------------------------
         self.fenetre = fenetre
-        self.fenetre.maxsize(width=1200, height=500)
-        self.fenetre.minsize(width=1200, height=500)
+        self.fenetre.maxsize(width=1600, height=600)
+        self.fenetre.minsize(width=1600, height=600)
         self.fenetre.title("Quarto !! ")
 
         # --------------------------------------------------------------------------
