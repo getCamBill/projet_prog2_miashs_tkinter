@@ -1,7 +1,10 @@
 # ==============================================================================
 import os
+from msilib.schema import RadioButton
 from tkinter import *
 from tkinter import ttk
+import time
+import threading
 from Model.Tablier import Tablier
 from Model.Pioche import Pioche
 from Model.Joueur import Joueur
@@ -30,11 +33,11 @@ class Quarto():
         """
         # --------------------------------------------------------------------------
         self.fenetre = fenetre
-        self.fenetre.maxsize(width=1100, height=500)
-        self.fenetre.minsize(width=1100, height=500)
+        self.fenetre.maxsize(width=1200, height=500)
+        self.fenetre.minsize(width=1200, height=500)
         self.fenetre.title("Quarto !! ")
-
-
+        # --------------------------------------------------------------------------
+        # --------------------------------------------------------------------------
         self.n = ttk.Notebook(self.fenetre)  # Création du système d'onglets
         self.n.pack()
 
@@ -50,21 +53,13 @@ class Quarto():
         self.n.add(self.o1, text='Quarto')  # Nom de l'onglet 1
         self.n.add(self.o2, text='Joueurs')  # Nom de l'onglet 2
         self.n.add(self.o3, text='Selectionner')  # Nom de l'onglet 2
-
+        # --------------------------------------------------------------------------
         AddUser(self.o2)
         # --------------------------------------------------------------------------
         filename = os.path.relpath('..\\Controller\\UserDatabase.db')
         # self.database: str = 'C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db'
         self.database: str = filename
         self.conn = create_connection(self.database)
-
-        # self.imageDir1 = os.path.relpath('\\Classique\\')
-        self.imageDir1 = 'Classique\\'
-        self.imageDir2 = '2D\\'
-        self.imageDir3 = 'Abstrait\\'
-        # self.sonDir = os.path.relpath('\\Sons\\')
-        self.sonDir = 'Sons\\'
-        print(self.imageDir1)
         # --------------------------------------------------------------------------
         self.Tablier: Tablier = Tablier()
         self.Etat: Etat = Etat(self.Tablier)
@@ -73,8 +68,6 @@ class Quarto():
         self.Joueur2: Joueur = joueur2
         self.aborted: bool = False
         self.ia: bool = False
-        """create the main window and pack the widgets"""
-
         # --------------------------------------------------------------------------
         self.framePlateau = Frame(self.o1, width=200, height=400, bg="grey")
         self.framePlateau.grid(row=0, column=0, padx=10, pady=5)
@@ -85,8 +78,8 @@ class Quarto():
         self.frameCentre = Frame(self.o1, width=200, height=400)
         self.frameCentre.grid(row=0, column=1, padx=10, pady=5)
         # --------------------------------------------------------------------------
-
-        self.buttonListe = []
+        self.pioche_buttonListe = {}
+        self.plateau_buttonListe = {}
         self.pieceEnJeux = ""
         # --------------------------------------------------------------------------
         self.fr1 = Frame(self.o3)
@@ -96,39 +89,44 @@ class Quarto():
         # --------------------------------------------------------------------------
         self.user_name_label = Label(self.fr1, text="Entrer les pseudos des deux Joueurs pour commencer \nSi un "
                                                     "joueur n'est pas dans la base de donnée, il faudra le créer.", bg = "grey", borderwidth = 2, relief = "groove")
-
         self.user_name_label.grid(row=0, column=1)
-
+        # --------------------------------------------------------------------------
+        self.theme = Label(self.fr1, text="Thème du jeux : ").grid(row=4, column=0)
+        self.v = IntVar()
+        self.r1 = Radiobutton(self.fr1, text="Classique", variable=self.v, value=1).grid(row=4, column=1)
+        self.r2 = Radiobutton(self.fr1, text="Abstrait", variable=self.v, value=2).grid(row=4, column=2)
+        # --------------------------------------------------------------------------
+        self.imageDir1 = 'Classique\\'
+        self.imageDir2 = 'Abstrait\\'
+        self.imageDir3 = '2D\\'
+        self.sonDir = 'Sons\\'
+        # --------------------------------------------------------------------------
         self.user_name = Entry(self.fr1, width=30)
         self.user_name.grid(row=1, column=1, padx=20)
         self.user_name_label = Label(self.fr1, text="Joueur 1")
         self.user_name_label.grid(row=1, column=0)
-
+        # --------------------------------------------------------------------------
         self.user_name2 = Entry(self.fr1, width=30)
         self.user_name2.grid(row=2, column=1, padx=20)
         self.user_name_label2 = Label(self.fr1, text="Joueur 2")
         self.user_name_label2.grid(row=2, column=0)
         # --------------------------------------------------------------------------
         # --------------------------------------------------------------------------
-
         self.n.select(2)
         # -------------------------------------------------------------------------
         self.submit_btn = Button(self.fr1, text="JOUER")
         self.submit_btn['command'] = lambda user1=self.user_name.get(), user2=self.user_name2.get(): self.submit()
         self.submit_btn.grid(row=3, column=1, padx=10, pady=10)
-
-
         # --------------------------------------------------------------------------
         self.fenetre.mainloop()
         # --------------------------------------------------------------------------
-
 # -------------------------------------------------------------------------
     def submit(self):
         """
 
         :return:
         """
-        # listeJ = select_joueur_by_victory(self.conn)
+
         user1 = self.user_name.get()
         user2 = self.user_name2.get()
         listeJ = [ele[1] for ele in select_joueur_by_victory(self.conn)]
@@ -148,23 +146,30 @@ class Quarto():
             self.n.select(1)
 
     # -------------------------------------------------------------------------
+    def quelDirImage(self):
+        if int(self.v.get()) == 1:
+            return self.imageDir1
+        elif int(self.v.get()) == 2:
+            return self.imageDir2
+    # -------------------------------------------------------------------------
     def createPlateau(self):
         """
 
         :return:
         """
-        photo = PhotoImage(file=self.imageDir1+"Z.png")  # C:Users\camil\PycharmProjects\UI\
+        photo = PhotoImage(file=self.quelDirImage()+"Z.png")  # C:Users\camil\PycharmProjects\UI\
         # photoimage = photo.subsample(1, 1)
         idCases = list(self.Tablier.tablier.keys())
         i: int = 0
-        for ligne in range(4):
-            for colonne in range(4):
+        for colonne in range(4):
+            for ligne in range(4):
 
                 id = idCases[i]
                 bt = Button(self.framePlateau, text=id, image=photo)
                 bt.image = photo
+                self.plateau_buttonListe[idCases[i]] = bt
                 # bt = Button(self.framePlateau, text=id, width=5, height=5)
-                bt['command'] = lambda idx=idCases[i], binst=bt: self.choisirCase(binst, idx)
+                bt['command'] = lambda idx=idCases[i], binst=bt: self.chooserCase(binst, idx)
                 bt.grid(row=ligne, column=colonne)
                 # bt.pack()
                 i += 1
@@ -184,15 +189,14 @@ class Quarto():
         for ligne in range(4):
             for colonne in range(4):
         # for i, piece in enumerate(self.Pioche.listPieceDispo()):
-                image = Image.open(self.imageDir1+idPieces[i] + ".png")
+                image = Image.open(self.quelDirImage()+idPieces[i] + ".png")
                 photo = ImageTk.PhotoImage(image)
                 button = Button(self.framePieces, image=photo)
                 button.image = photo
-                self.buttonListe.append(button)
+                self.pioche_buttonListe[idPieces[i]] = button
                 # self.button['image'] = photo
                 button['command'] = lambda idx=idPieces[i], binst=button: self.choixPiece(idx, binst)
                 button.grid(row=ligne, column=colonne)
-                # button.pack(side="bottom", fill="both", expand="yes")
                 i += 1
 # --------------------------------------------------------------------------
     def choixPiece(self, idxPiece, binst):
@@ -202,61 +206,105 @@ class Quarto():
         :param binst:
         :return:
         """
-        self.aQuiLeTour['text'] = str(self.Tour.auTourDe()[1] + " choisi la case")
-        print(idxPiece)
+
+        # print(self.Tour.auTourDe())
+        self.aQuiLeTour['text'] = str(self.Tour.auTourDe()[1] + " choose la case")
+        # print(idxPiece)
         self.pieceEnJeux = idxPiece
-        photo = PhotoImage(file=self.imageDir1+idxPiece+".png")
+        photo = PhotoImage(file=self.quelDirImage()+idxPiece+".png")
         self.pieceStby.image = photo
         self.pieceStby['image'] = photo
         self.Tablier.piecePourAdversaire(idxPiece, self.Joueur2)
         binst.destroy()
-        self.buttonListe.remove(binst)
+        del self.pioche_buttonListe[idxPiece]
+
+        self.suspens()
+
+        self.disable_normalPiece(1)
         self.Tour.tour += 1
 
-        self.wait_song.play(0,5000)
-        # if self.ia:
-        #     if self.Tour.auTourDe()[0] == 'IA':
-        #         self.choisirCase(self.buttonListe)
+        print(self.IA.mirror.tablier.items())
+        self.is_IA_turn()
+
+
 # ---------------------------------------------------------------------------
-    def choisirCase(self, binst, idxCase):
+    def chooserCase(self, binst, idxCase):
         """
 
         :param binst:
         :param idxCase:
         :return:
         """
+        # self.Tour.tour += 1
+        # print(self.Tour.auTourDe())
+        # self.is_IA_turn()
         # --------------------------------------------------------------------------
-        self.aQuiLeTour['text'] = str(self.Tour.auTourDe()[0] + " choisi la pièce")
+        self.aQuiLeTour['text'] = str(self.Tour.auTourDe()[0] + " choose la pièce")
         self.aQuiLeTour.grid(row=6, column=0)
         self.wait_song.stop()
         if self.Tablier.poserPiece(self.Joueur2, idxCase, self.Pioche) == 1:
-            self.popup(1)
+            # self.popup(1)
+            pass
         else:
-            print(idxCase)
+            # print(idxCase)
             self.idxCase = idxCase
             replace = self.pieceEnJeux
-            photo = PhotoImage(file=self.imageDir1+replace + "R.png")
+            photo = PhotoImage(file=self.quelDirImage()+replace + "R.png")
             binst.image = photo
             binst['image'] = photo
             self.move_song.play()
-            photo = PhotoImage(file=self.imageDir1+"start.png")
+            photo = PhotoImage(file=self.quelDirImage()+"start.png")
             photoimage = photo.subsample(3, 3)
             self.pieceStby.image = photoimage
             self.pieceStby['image'] = photoimage
-
+            # self.IA.mirror[idxCase] = replace # onnmet la piece dans le plateau mirroir pour IA
+            del self.plateau_buttonListe[idxCase]
         if self.Tour.tour > 2:
             self.vict()
+        # self.is_IA_turn()
+        self.disable_normalPiece(-1)
+        # print(self.pioche_buttonListe.items())
+
+# --------------------------------------------------------------------------
+    def is_IA_turn(self):
+
+        if self.Tour.auTourDe()[0] == 'IA':
+            # self.IA.gameState(self.Tablier.tablier)
+            idcase, boutonPlateau = self.IA.bestPlace(self.plateau_buttonListe)
+            self.chooserCase(boutonPlateau, idcase)
+
+            idPiece, boutonPiece = self.IA.worstPiece(self.pioche_buttonListe)
+            self.choixPiece(idPiece, boutonPiece)
+
+        # elif self.Tour.auTourDe()[1] == 'IA':
+        #     print("1 joue")
+        #     idPiece, boutonPiece = self.IA.worstPiece(self.pioche_buttonListe)
+        #     self.choixPiece(idPiece, boutonPiece)
+        #
+        #     idcase, boutonPlateau = self.IA.bestPlace(self.plateau_buttonListe)
+        #     self.chooserCase(boutonPlateau, idcase)
+        #     self.Tour.tour -= 1
 
 
-
+# --------------------------------------------------------------------------
+    def disable_normalPiece(self, machin):
+        """
+        On desactive le choix des bouton des pieces dispo
+        :param machin:
+        :return:
+        """
+        if machin == 1:
+            for btn in self.pioche_buttonListe.values():
+                btn['state'] = 'disabled'
+        else:
+            for btn in self.pioche_buttonListe.values():
+                btn['state'] = 'normal'
 # --------------------------------------------------------------------------
     def vict(self):
         """
 
         :return:
         """
-        # on appelle les fonctions seulement au bout de 4 tours
-
         if self.Tablier.isQuarto():
             self.victoire = True
             self.aQuiLeTour['text'] = ""
@@ -294,26 +342,28 @@ class Quarto():
         elif code == 4:
             self.fInfos.title('Fin')
             Label(self.fInfos, text="Plus de pièces disponible donc fin de la partie !")
-            # Button(self.fInfos, text='Nouvelle partie', command=self.new_game).pack(padx=10, pady=10)
             Button(self.fInfos, text='Quitter', command=self.fenetre.destroy).pack(padx=10, pady=10)
         # ----------------------------------------------------
         self.fInfos.transient(self.fenetre)  # Réduction popup impossible
         self.fInfos.grab_set()  # Interaction avec fenetre jeu impossible
         self.fenetre.wait_window(self.fInfos)  # Arrêt script principal
 # --------------------------------------------------------------------------
-
+    def suspens(self):
+        self.wait_song.set_volume(10)
+        self.wait_song.play(0, 5000)
+# --------------------------------------------------------------------------
     def new_game(self):
         """
 
         :return:
         """
-        photo = PhotoImage(file=self.imageDir1+"start.png")
+        photo = PhotoImage(file=self.quelDirImage()+"start.png")
         photoimage = photo.subsample(3, 3)
         self.pieceStby = Label(self.frameCentre, image=photoimage)
         self.pieceStby.image = photoimage
         self.pieceStby.grid(row=4, column=0)
         # --------------------------------------------------------------------------
-        self.win = Label(self.frameCentre, text=' ... ')
+        self.win = Label(self.frameCentre, text=' ... ', font=("Courier", 15, 'bold'))
         self.win.grid(row=5, column=0)
         # --------------------------------------------------------------------------
         self.createPioche()
@@ -321,7 +371,7 @@ class Quarto():
         self.cases: list = []
         self.idxCase = ''
         # --------------------------------------------------------------------------
-        self.aQuiLeTour = Label(self.frameCentre, text=str(self.Tour.auTourDe()[0] + " choisis la pièce"))
+        self.aQuiLeTour = Label(self.frameCentre, text=str(self.Tour.auTourDe()[0] + " \nchoose la pièce"), font=("Courier", 15, 'bold'))
         self.aQuiLeTour.grid(row=6, column=0)
         # --------------------------------------------------------------------------
         pygame.mixer.init()
@@ -329,7 +379,12 @@ class Quarto():
         self.move_song = pygame.mixer.Sound(self.sonDir+"351518__mh2o__chess-move-on-alabaster.wav")
         self.wait_song = pygame.mixer.Sound(self.sonDir+"0218.wav")
         # --------------------------------------------------------------------------
-        self.mon_audio.stop()
+        # print(self.Tour.auTourDe()[0])
+        # if self.Tour.auTourDe()[0] == 'IA':
+        #     idPiece, bouton = self.IA.worstPiece(self.pioche_buttonListe)
+        #     self.choixPiece(idPiece, bouton)
+        # self.mon_audio.stop()
+        # print(self.Tour.auTourDe())
 # --------------------------------------------------------------------------
 # --------------------------------------------------------------------------
 # --------------------------------------------------------------------------

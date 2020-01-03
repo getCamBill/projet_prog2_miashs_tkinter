@@ -1,0 +1,5 @@
+digraph "classes_demo_DVP" {
+charset="utf-8"
+rankdir=BT
+"0" [label="{Tablier.Tablier|tablier : dict\l|isAttrEnCommun(idPiece1, idPiece2, idPiece3, idPiece4)\lisCarreQuarto()\lisCaseValide(idCase)\lisColonneQuarto()\lisDiagoQuarto()\lisLigneQuarto()\lisPieceValide(idPiece)\lisQuarto()\lpiecePourAdversaire(idPiece, joueur)\lposerPiece(joueur, idCase, pioche)\lsho()\l}", shape="record"];
+}

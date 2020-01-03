@@ -79,7 +79,7 @@ class AddUser():
         listeJ = select_joueur_by_victory(self.conn)
         for i in listeJ:
             if i[1] != "":
-                info = "Pseudo :"+ i[1]+" Victoire : "+str(i[2])+" Défaite : "+str(i[3])
+                info = " | "+ i[1]+" | Victoire : "+str(i[2])+" Défaite : "+str(i[3])
                 self.listbox.insert(END, info)
 # --------------------------------------------------------------------------
 

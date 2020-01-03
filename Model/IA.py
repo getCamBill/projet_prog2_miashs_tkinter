@@ -3,7 +3,7 @@ Classe IA:
 Jouer contre l'ordi
 """
 
-from Model.Tablier import Pioche, Tablier
+from Model.Tablier import Tablier
 from Model.Pioche import Pioche
 from Model.Tour import Tour
 from Model.Joueur import Joueur
@@ -11,10 +11,15 @@ import random
 # ==============================================================================
 class IA_random(object):
 
-    def __init__(self, Tablier: Tablier = None, Pioche: Pioche = None, Tour: Tour = None):
-        self.tablier = Tablier
+    def __init__(self, TablierParam: Tablier = None, Pioche: Pioche = None, Tour: Tour = None):
+        self.tablier = TablierParam
         self.pieces = Pioche
         self.tour = Tour.tour
+        self.mirror = Tablier()
+        # self.tablierMiroir()
+        print(self.mirror.tablier.keys())
+# --------------------------------------------------------------------------
+
 # --------------------------------------------------------------------------
     def casesDispo(self):
         casesDispo: list = []
@@ -40,9 +45,18 @@ class IA_random(object):
         On regarde la meilleurs case pour poser notre piece
         :return:
         """
-        case = random.choice(listeCase)
+        # for placeDispo in list(listeCase.items()):
+        #     self.mirror.tablier[placeDispo[0]] = placeDispo[1]
+        #     if self.mirror.isQuarto():
+        #         # self.mirror.tablier[placeDispo[0]] = placeDispo[1]
+        #         idcase = placeDispo[0]
+        #         btn  = placeDispo[1]
+        #         return (idcase, btn)
+        #     else:
+        #         del self.mirror.tablier[placeDispo[0]]
 
-        return case
+        idcase, btn = random.choice(list(listeCase.items()))
+        return (idcase, btn)
 
 # --------------------------------------------------------------------------
     def worstPiece(self, listePiece):
@@ -51,13 +65,11 @@ class IA_random(object):
         sur les places possibles
         :return:
         """
-        piece = random.choice(listePiece)
+        # print(listePiece.items())
+        idpce, btn = random.choice(list(listePiece.items()))
 
-        return piece
-# --------------------------------------------------------------------------
-    def piecesVoisine(self, case):
-        pass
-# --------------------------------------------------------------------------
+        # print((idpce, btn))
+        return (idpce, btn)
 
 # --------------------------------------------------------------------------
 
