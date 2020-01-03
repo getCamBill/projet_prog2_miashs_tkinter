@@ -1,7 +1,5 @@
 # Quarto
-Version sans IHM
-Fichier Quarto.py à Run pour jouer
+Version finale 1.0 
 
-Version avec IHM dans Model => A.py à Run pour jouer
-    - correction des bugs en cours
+Pour jouer View => A.py à Run 
 
