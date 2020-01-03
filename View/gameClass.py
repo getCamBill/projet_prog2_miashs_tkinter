@@ -28,18 +28,6 @@ class Game(object):
         self.Tour: Tour = Tour()
         self.aborted: bool = False
 
-    def isAborted(self, input):
-        """
-
-        :param input:
-        :return:
-        """
-        if input == "quitter" or "q" or "QUITTER" or "Q":
-            self.aborted = True
-            print("Partie ABORTED !!")
-        else:
-            return input
-
     def showRules(self):
         """
 
@@ -78,29 +66,6 @@ class Game(object):
         print("FIN DE LA PARTIE '\n' \
         - Victoire: un joueur annonce et montre un “QUARTO !”. '\n'\
         - Egalité: toutes les pièces ont été posées sans vainqueur.")
-
-    def actionPiece(self):
-        """
-
-        :return:
-        """
-
-        print("Le joueur 1 choisit une pièce pour le joueur 2, dans la liste suivante : \n")
-        self.Pioche.showPieces()
-
-        piece = input("Id de la pièce choisis : ")
-        self.Tablier.piecePourAdversaire(piece, self.Joueur2)
-
-    def actionCase(self):
-        """
-
-        :return:
-        """
-        print("Le joueur 2 indique la case : ")
-        self.Tablier.showTablier()
-
-        case = input("Id de la case : ")
-        self.Tablier.poserPiece(self.Joueur2, case, self.Pioche)
 
     def start(self):
         """

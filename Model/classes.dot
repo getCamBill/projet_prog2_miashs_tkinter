@@ -1,5 +1,0 @@
-digraph "classes" {
-charset="utf-8"
-rankdir=BT
-"0" [label="{Tablier|tablier : dict\l|__init__()\lisAttrEnCommun(idPiece1, idPiece2, idPiece3, idPiece4)\lisCarreQuarto()\lisCaseValide(idCase)\lisColonneQuarto()\lisDiagoQuarto()\lisLigneQuarto()\lisPieceValide(idPiece)\lisQuarto()\lpiecePourAdversaire(idPiece, joueur)\lposerPiece(joueur, idCase, pioche)\lsho()\l}", shape="record"];
-}

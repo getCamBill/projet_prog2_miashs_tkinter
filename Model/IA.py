@@ -12,6 +12,12 @@ import random
 class IA_random(object):
 
     def __init__(self, TablierParam: Tablier = None, Pioche: Pioche = None, Tour: Tour = None):
+        """
+
+        :param TablierParam:
+        :param Pioche:
+        :param Tour:
+        """
         self.tablier = TablierParam
         self.pieces = Pioche
         self.tour = Tour.tour
@@ -22,6 +28,10 @@ class IA_random(object):
 
 # --------------------------------------------------------------------------
     def casesDispo(self):
+        """
+
+        :return:
+        """
         casesDispo: list = []
         for case in self.tablier.tablier.items():
             if not case[1]:
@@ -29,6 +39,10 @@ class IA_random(object):
         return casesDispo
 # --------------------------------------------------------------------------
     def piecesDispo(self):
+        """
+
+        :return:
+        """
         piecesDispo: list = []
         for piece in self.pieces.Pioche.keys():
             piecesDispo.append(piece)
@@ -75,12 +89,12 @@ class IA_random(object):
 
 # ==============================================================================
 # ==============================================================================
-if __name__ == '__main__':
-    tab = Tablier()
-    pio = Pioche()
-    j1 = Joueur('1')
-    j2 = Joueur('2')
-    t = Tour(j1, j2)
-    ia = IA_random(tab, pio, t)
-    print(ia.bestPlace())
-    print(ia.worstPiece())
+# if __name__ == '__main__':
+#     tab = Tablier()
+#     pio = Pioche()
+#     j1 = Joueur('1')
+#     j2 = Joueur('2')
+#     t = Tour(j1, j2)
+#     ia = IA_random(tab, pio, t)
+#     print(ia.bestPlace())
+#     print(ia.worstPiece())

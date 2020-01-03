@@ -12,7 +12,8 @@ class Joueur(object):
         self.pseudo: str = pseudo
         self.jouer: bool = False
 
-        self.database: str = 'C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db'
+        filename = os.path.relpath('..\\Controller\\UserDatabase.db')
+        self.database: str = filename
         self.conn = create_connection(self.database)
 
         if not select_joueur(self.conn, self.pseudo):
@@ -36,11 +37,3 @@ class Joueur(object):
         with self.conn:
             update_partie_joueur(self.conn, (win, lose, self.pseudo))
 
-    def show(self):
-        """
-
-        :return:
-        """
-        with self.conn:
-            print("1. Classement des joueurs par victoire:")
-            select_joueur_by_victory(self.conn)

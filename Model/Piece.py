@@ -13,10 +13,3 @@ class Piece(object):
         self.shape: str = shape
         self.size: str = size
         self.dug: int = dug
-
-    def showCarac(self):
-        """
-
-        :return:
-        """
-        return self.color, self.shape, self.size, self.dug

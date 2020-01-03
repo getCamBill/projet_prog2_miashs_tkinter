@@ -1,4 +1,5 @@
 import sqlite3
+import os
 from sqlite3 import Error
 
 
@@ -127,13 +128,10 @@ def select_joueur_by_victory(conn):
     cur = conn.cursor()
     cur.execute("SELECT * FROM joueur ORDER BY win DESC")
     rows = cur.fetchall()
-    # for row in rows:
-    #     print(row)
     return list(rows)
 
 
 def first():
-    # database: str = "C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db"
     filename = os.path.relpath('..\\Controller\\UserDatabase.db')
     database: str = filename
     sql_create_projects_table = """ CREATE TABLE IF NOT EXISTS joueur (
@@ -143,10 +141,8 @@ def first():
                                                 lose integer
                                             ); """
 
-    # create a database connection
     conn = create_connection(database)
 
-    # create tables
     if conn is not None:
         # create Joueur table
         create_table(conn, sql_create_projects_table)
@@ -170,40 +166,4 @@ def first():
                  ;
                  ''')
 
-
-if __name__ == '__main__':
-    # first()
-
-    # create a database connection
-    database: str = "UserDatabase.db"
-    conn = create_connection(database)
-
-    with conn:
-        print("1. Classement des joueurs par victoire:")
-        select_joueur_by_victory(conn)
-
-
-    with conn:
-        # create a new joueur
-        user = ('kmi', 0, 0)
-        user_id = create_joueur(conn, user)
-
-    with conn:
-        update_partie_joueur(conn, (1, 0, 'kmi'))
-
-    with conn:
-        print("1. Classement des joueurs par victoire:")
-        select_joueur_by_victory(conn)
-
-    # supp d'un joueur
-    with conn:
-        delete_joueur(conn, 'kmi')
-        delete_joueur(conn, 'kol')
-
-
-    # with conn:
-    #     delete_all(conn)
-    #
-    with conn:
-        print("1. Classement des joueurs par victoire:")
-        select_joueur_by_victory(conn)
+# if __name__ == '__main__':

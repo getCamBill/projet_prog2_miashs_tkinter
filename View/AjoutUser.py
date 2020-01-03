@@ -2,7 +2,8 @@ from Controller.BDD import *
 
 # first()
 # create a database connection
-database: str = "C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db"
+filename = os.path.relpath('..\\Controller\\UserDatabase.db')
+database: str = filename
 conn = create_connection(database)
 
 choix = ""

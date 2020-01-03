@@ -12,8 +12,8 @@ class AddUser():
 
         self.root = onglet
         # self.root.title("Liste des Joueurs")
-
-        self.database: str = 'C:\\Users\\camil\\PycharmProjects\\Quarto\\Controller\\UserDatabase.db'
+        filename = os.path.relpath('..\\Controller\\UserDatabase.db')
+        self.database: str = filename
         self.conn = create_connection(self.database)
         # --------------------------------------------------------------------------
         self.fr1 = Frame(self.root)
@@ -83,18 +83,18 @@ class AddUser():
                 self.listbox.insert(END, info)
 # --------------------------------------------------------------------------
 
-if __name__ == '__main__':
-    fenetre = Tk()
-    fenetre.title("Quarto !! ")
-
-    n = ttk.Notebook(fenetre)  # Création du système d'onglets
-
-    n.pack()
-    o1 = ttk.Frame(n)  # Ajout de l'onglet 1
-    o1.pack()
-    # n.add(o1, text='Quarto')  # Nom de l'onglet 1
-
-    o1 = Tk()
-    a = AddUser(o1)
-    fenetre.mainloop()
-    a.conn.close()
+# if __name__ == '__main__':
+#     fenetre = Tk()
+#     fenetre.title("Quarto !! ")
+#
+#     n = ttk.Notebook(fenetre)  # Création du système d'onglets
+#
+#     n.pack()
+#     o1 = ttk.Frame(n)  # Ajout de l'onglet 1
+#     o1.pack()
+#     # n.add(o1, text='Quarto')  # Nom de l'onglet 1
+#
+#     o1 = Tk()
+#     a = AddUser(o1)
+#     fenetre.mainloop()
+#     a.conn.close()

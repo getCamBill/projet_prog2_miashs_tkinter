@@ -1,13 +1,0 @@
-
-upython:S100;"RRename method "actionPiece" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ςεύÿÿÿÿ8±μπα-
-xpython:S3776L"TRefactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.(ωΗΔΝϊÿÿÿÿ8°ϋΏρα-
-Spython:S1066d"/Merge this if statement with the enclosing one.(΄υ©·ψÿÿÿÿ8°ϋΏρα-
-ipython:S116	"LRename this field "Etat" to match the regular expression ^[_a-z][_a-z0-9]*$.(Σό΅%8ζΚ…πα-
-lpython:S116"NRename this field "Pioche" to match the regular expression ^[_a-z][_a-z0-9]*$.(μ‡ΒΊ8Β€Βκα-
-npython:S100"PRename method "showRules" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ΈΔ―Ή8·ίµκα-
-mpython:S100"PRename method "isAborted" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(±ΑΎ8ΠΟΝλα-
-mpython:S116"ORename this field "Joueur2" to match the regular expression ^[_a-z][_a-z0-9]*$.(δ“8£οκα-
-npython:S100C"QRename method "actionCase" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(μ―ά58‹“όλα-
-mpython:S116
-"ORename this field "Tablier" to match the regular expression ^[_a-z][_a-z0-9]*$.(ΝΆΑ8£μΓκα-
-mpython:S116"ORename this field "Joueur1" to match the regular expression ^[_a-z][_a-z0-9]*$.(―Γ«η8£οκα-

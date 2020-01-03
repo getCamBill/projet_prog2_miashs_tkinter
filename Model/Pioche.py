@@ -17,7 +17,7 @@ class Pioche(object):
 
     def showPieces(self):
         """
-
+        Méthode pour le quarto non graphique
         :return:
         """
         print("Pièces disponibles : ")
@@ -49,9 +49,9 @@ class Pioche(object):
         """
         del self.Pioche[key]
 
-if __name__ == "__main__":
-    p1 = Pioche()
-    p1.showPieces()
-    # print(p1.Pioche['MRG1'].showCarac())
-    print(p1.Pioche.items())
-    print(p1.Pioche.get('MRG1'))
+# if __name__ == "__main__":
+#     p1 = Pioche()
+#     p1.showPieces()
+#     # print(p1.Pioche['MRG1'].showCarac())
+#     print(p1.Pioche.items())
+#     print(p1.Pioche.get('MRG1'))
